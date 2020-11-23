@@ -1,9 +1,99 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:visibility="visible"
+    android:background="@color/background_color"
+    >
 
-    <FrameLayout
-        android:id="@+id/settings"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-</LinearLayout>
+
+    <Switch
+        android:id="@+id/notSwitch"
+        android:layout_width="320dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="80dp"
+        android:text="Notifications"
+        android:textStyle="bold" />
+
+    <Switch
+            android:id="@+id/vibrationSwitch"
+            android:layout_width="320dp"
+            android:layout_height="40dp"
+            android:layout_alignTop="@id/notSwitch"
+            android:layout_marginTop="60dp"
+            android:layout_marginLeft="30dp"
+            android:text="Vibration"
+            android:textStyle="bold"
+            />
+
+
+    <Spinner
+        android:id="@+id/timeToNotifySpinner"
+        android:layout_width="130dp"
+        android:layout_height="45dp"
+        android:layout_alignTop="@id/vibrationSwitch"
+        android:layout_alignEnd="@id/vibrationSwitch"
+        android:layout_marginLeft="212dp"
+        android:layout_marginTop="60dp"
+        android:entries="@array/not_time_arrays" />
+
+    <TextView
+        android:id="@+id/timeToNotifyText"
+        android:layout_width="180dp"
+        android:layout_height="45dp"
+        android:layout_alignTop="@id/vibrationSwitch"
+        android:layout_alignStart="@id/vibrationSwitch"
+        android:layout_marginTop="60dp"
+        android:text="Time to notify"
+        android:gravity="center_vertical"
+        android:textStyle="bold"
+        />
+
+
+    <EditText
+        android:id="@+id/homeAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="15"
+        android:layout_alignTop="@id/timeToNotifyText"
+        android:layout_alignStart="@id/timeToNotifyText"
+        android:layout_alignEnd="@id/timeToNotifySpinner"
+        android:layout_marginTop="60dp"
+        android:inputType="textPostalAddress"
+        android:text="What's your home address"/>
+
+
+    <TextView
+        android:id="@+id/distanceToNotifyText"
+        android:layout_width="180dp"
+        android:layout_height="45dp"
+        android:layout_alignTop="@id/homeAddress"
+        android:layout_alignStart="@id/homeAddress"
+        android:layout_marginTop="60dp"
+        android:text="Distance to notify"
+        android:gravity="center_vertical"
+        android:textStyle="bold"/>
+
+    <Spinner
+        android:id="@+id/distanceToNotifySpinner"
+        android:layout_width="140dp"
+        android:layout_height="45dp"
+        android:layout_alignTop="@id/homeAddress"
+        android:layout_alignEnd="@id/homeAddress"
+        android:layout_marginLeft="212dp"
+        android:layout_marginTop="60dp"
+        android:entries="@array/distance_arrays" />
+
+    <TextView
+        android:id="@+id/placesToNotifyText"
+        android:layout_width="180dp"
+        android:layout_height="45dp"
+        android:layout_alignTop="@id/distanceToNotifySpinner"
+        android:layout_alignStart="@id/distanceToNotifyText"
+        android:layout_marginTop="60dp"
+        android:text="Places to notify"
+        android:gravity="center_vertical"
+        android:textStyle="bold"
+       />
+
+</RelativeLayout>
