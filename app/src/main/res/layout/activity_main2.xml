@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F6EFEF"
+    android:background="@color/background_color"
     tools:context=".yichen.Main2Activity">
 
     <RelativeLayout
@@ -13,7 +13,7 @@
         android:layout_centerVertical="true"
         android:layout_marginStart="92dp"
         android:layout_marginTop="116dp"
-        android:background="#F6EFEF"
+        android:background="@color/background_color"
         android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">

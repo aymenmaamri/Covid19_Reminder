@@ -1,4 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:visibility="visible"
@@ -6,14 +7,29 @@
     >
 
 
+    <TextView
+        android:id="@+id/settingsText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="108dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="111dp"
+        android:gravity="center"
+        android:text="Settings"
+        android:textSize="45dp"
+        android:textStyle="bold" />
+
     <Switch
         android:id="@+id/notSwitch"
         android:layout_width="320dp"
         android:layout_height="40dp"
         android:layout_marginLeft="30dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="170dp"
         android:text="Notifications"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:textSize="20dp"/>
 
     <Switch
             android:id="@+id/vibrationSwitch"
@@ -24,6 +40,7 @@
             android:layout_marginLeft="30dp"
             android:text="Vibration"
             android:textStyle="bold"
+            android:textSize="20dp"
             />
 
 
@@ -45,6 +62,7 @@
         android:layout_alignStart="@id/vibrationSwitch"
         android:layout_marginTop="60dp"
         android:text="Time to notify"
+        android:textSize="20dp"
         android:gravity="center_vertical"
         android:textStyle="bold"
         />
@@ -72,7 +90,8 @@
         android:layout_marginTop="60dp"
         android:text="Distance to notify"
         android:gravity="center_vertical"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:textSize="20dp"/>
 
     <Spinner
         android:id="@+id/distanceToNotifySpinner"
@@ -94,6 +113,21 @@
         android:text="Places to notify"
         android:gravity="center_vertical"
         android:textStyle="bold"
+        android:textSize="20dp"
        />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnToPlacesToNotify"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/distanceToNotifySpinner"
+        android:layout_alignTop="@id/distanceToNotifySpinner"
+        android:layout_marginStart="85dp"
+        android:layout_marginTop="58dp"
+
+        android:layout_toEndOf="@+id/placesToNotifyText"
+        android:clickable="true"
+        android:onClick="toOtherLocations"
+        app:srcCompat="@drawable/abc_vector_test" />
 
 </RelativeLayout>

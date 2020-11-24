@@ -1,6 +1,8 @@
 package com.example.covid19_reminder.aymen;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,5 +23,11 @@ public class SettingsActivity extends AppCompatActivity {
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
         }
+    }
+
+
+    public void toOtherLocations(View view) {
+        Intent intent = new Intent(this, PlacesToNotify.class);
+        startActivity(intent);
     }
 }
