@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+  Font family: B612 Mono
+  Line height: 29sp
+-->
+    <!-- styles.xml -->
+    <style name="covid_19_re">
+
+        <item name="android:textSize">
+            50sp
+        </item>
+
+        <item name="android:textColor">
+            #4F4F4F
+        </item>
+    </style>
+
+</resources>
