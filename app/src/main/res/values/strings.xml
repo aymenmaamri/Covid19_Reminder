@@ -46,4 +46,6 @@
     <string name="title_activity_maps">Map</string>
     <string name="timer">Timer</string>
     <string name="mask_sale">Mask Sale</string>
+    <string name="help">Help</string>
+    <string name="settings">Settings</string>
 </resources>
