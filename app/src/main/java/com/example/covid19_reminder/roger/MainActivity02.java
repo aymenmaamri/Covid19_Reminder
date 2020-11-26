@@ -98,5 +98,3 @@ public class MainActivity02 extends AppCompatActivity {
         }
 
     }
-
-}

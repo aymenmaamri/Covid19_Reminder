@@ -23,7 +23,7 @@ public class Main2Activity extends AppCompatActivity {
 
         /** Called when the user taps the "TIMER" button */
 
-        this.timer = (Button) findViewById(R.id.timer);
+        /**this.timer = (Button) findViewById(R.id.timer);
         timer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -31,9 +31,15 @@ public class Main2Activity extends AppCompatActivity {
                 startActivity(otherActivity);
                 finish();
             }
-        });
+        });**/
 
     }
+
+    public void timer(View view) {
+        Intent intent = new Intent(this, MainActivity01.class);
+        startActivity(intent);
+    }
+
 
     /** Called when the user taps the "Mask Sale" button */
     public void maskSale(View view) {
