@@ -3,6 +3,7 @@ package com.example.covid19_reminder.roger;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;

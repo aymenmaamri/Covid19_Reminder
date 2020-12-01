@@ -24,30 +24,16 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
-
-    <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="181dp"
-        android:layout_height="139dp"
-        android:layout_marginTop="263dp"
-        android:layout_marginEnd="115dp"
-        android:backgroundTint="#FAF7F7"
-        android:contentDescription="@string/todo2"
-        android:src="@drawable/custom_btn2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView2"
+    <ImageView
+        android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="304dp"
-        android:layout_marginEnd="160dp"
-        android:text="@string/start"
-        android:textAlignment="center"
-        android:textColor="@color/background_color"
-        android:textSize="40sp"
+        android:layout_marginTop="175dp"
+        android:layout_marginEnd="130dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ellipse_1"
+        android:contentDescription="TODO" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
