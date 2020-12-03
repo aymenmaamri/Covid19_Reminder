@@ -1,25 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:backgroundTint="#FFFFFF">
 
     <Button
         android:id="@+id/btn3"
         android:layout_width="300dp"
         android:layout_height="60dp"
         android:layout_marginBottom="35dp"
-        android:text="Okay!"
-        android:textSize="25dp"
+        android:background="@drawable/custom_btn2"
+        android:backgroundTint="#FBFBFB"
+        android:text="@string/okay"
+        android:textColor="#ffffff"
+        android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        android:textColor="#ffffff"
-        android:background="@drawable/custom_btn2" />
-
+        app:strokeColor="#FFFFFF" />
 
 
     <View
@@ -33,18 +34,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.408" />
+
     <TextView
         android:id="@+id/textView"
         android:layout_width="359dp"
         android:layout_height="280dp"
-        android:text="Please put your mask on!"
+        android:text="@string/please_put_your_mask_on"
         android:textColor="#000000"
-        android:textSize="60dp"
-        android:textStyle="bold"
+        android:textSize="60sp"
         app:layout_constraintBottom_toBottomOf="@+id/view"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.307"
+        app:layout_constraintHorizontal_bias="0.68"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
