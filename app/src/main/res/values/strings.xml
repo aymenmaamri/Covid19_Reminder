@@ -56,4 +56,5 @@
     <string name="_00_00">00:00:00</string>
     <string name="time">TIME</string>
     <string name="todo2">TODO</string>
+    <string name="btntext1">"No, I'll get a new one"</string>
 </resources>

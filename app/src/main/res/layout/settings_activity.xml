@@ -3,9 +3,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:visibility="visible"
-    android:background="@color/background_color"
-    >
+    android:background="@color/background_color">
 
+    <View
+        android:id="@+id/union"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/header"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="-77dp" />
 
     <TextView
         android:id="@+id/settingsText"
@@ -18,7 +28,8 @@
         android:layout_marginEnd="111dp"
         android:gravity="center"
         android:text="Settings"
-        android:textSize="45dp"
+        android:typeface="monospace"
+        android:textSize="40dp"
         android:textStyle="bold" />
 
     <Switch

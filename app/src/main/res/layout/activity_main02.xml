@@ -13,18 +13,31 @@
             android:background="@color/background_color"
             tools:context=".MainActivity2">
 
+                <View
+                    android:id="@+id/union"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:background="@drawable/header"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0"
+                    tools:layout_editor_absoluteX="-77dp" />
+
                 <TextView
                     android:id="@+id/text_view_countdown2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="85dp"
+                    android:layout_marginTop="100dp"
                     android:gravity="center_horizontal"
                     android:text="@string/time"
-
                     android:textAlignment="center"
+
                     android:textColor="@android:color/black"
                     android:textColorLink="@color/purple_700"
                     android:textSize="70sp"
+                    android:typeface="monospace"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -37,6 +50,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:text="@string/_00_00"
+            android:typeface="monospace"
             android:textColor="@android:color/black"
             android:textSize="70sp" />
 
