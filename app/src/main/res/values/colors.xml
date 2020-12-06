@@ -10,6 +10,7 @@
     <color name="background_color">#FAF7F7</color>
     <color name="button">#F47474</color>
     <color name="theme">#B3EEF1</color>
-
+    <color name="green">#055FF5</color>
+    <color name="red">#EB5757</color>
 
 </resources>

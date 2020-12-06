@@ -41,37 +41,49 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
+                <Button
+                    android:id="@+id/startStopButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginStart="53dp"
+                    android:layout_marginBottom="186dp"
+                    android:background="@color/red"
+                    android:onClick="startStopTapped"
+                    android:text="Start"
+                    android:textColor="@color/green"
+                    android:textSize="30sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="53dp"
+                    android:onClick="resetTapped"
+                    android:text="RESET"
+                    android:textColor="@color/red"
+                    android:textSize="30sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_gravity="end"
+                    android:layout_marginStart="53dp"
+                    android:layout_marginBottom="186dp"
+                    android:background="@color/red" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+
         <TextView
-            android:id="@+id/text_view_countdown"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="@string/_00_00"
-            android:typeface="monospace"
+            android:id="@+id/timerText"
+            android:textSize="70sp"
+            android:text="00 : 00 : 00"
             android:textColor="@android:color/black"
-            android:textSize="70sp" />
-
-        <Button
-            android:id="@+id/button_start_pause"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/text_view_countdown"
-            android:layout_centerHorizontal="true"
-            android:text="@string/start2" />
-
-        <Button
-            android:id="@+id/button_reset"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/text_view_countdown"
-            android:layout_marginStart="-89dp"
-            android:layout_marginTop="67dp"
-            android:layout_toEndOf="@+id/button_start_pause"
-            android:text="@string/reset2"
-            android:visibility="invisible"
-            tools:visibility="visible" />
+            android:layout_gravity="center"
+            android:layout_marginTop="40dp"/>
 
 </RelativeLayout>
