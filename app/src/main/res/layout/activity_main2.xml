@@ -4,47 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_color"
+
     tools:context=".yichen.Main2Activity">
 
-    <View
-        android:id="@+id/union"
+    <ImageView
+        android:id="@+id/bg_img"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:background="@drawable/header"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        tools:layout_editor_absoluteX="-77dp" />
+        android:layout_height="match_parent"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/background_image"/>
+
+
+
+
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginStart="92dp"
-        android:layout_marginTop="116dp"
-        android:background="@color/background_color"
+        android:layout_marginStart="104dp"
+        android:layout_marginTop="312dp"
         android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <Button
-            android:id="@+id/timer"
-            android:layout_width="200dp"
-            android:layout_height="66dp"
-            android:onClick="timer"
-            android:text="@string/timer" />
-
-        <Button
-            android:id="@+id/maskSale"
-            android:layout_width="200dp"
-            android:layout_height="66dp"
-            android:layout_below="@id/timer"
-            android:layout_marginTop="81dp"
-            android:onClick="maskSale"
-            android:text="@string/mask_sale" />
     </RelativeLayout>
 
     <ImageButton
@@ -54,11 +38,11 @@
         android:layout_marginStart="5dp"
         android:layout_marginBottom="5dp"
         android:backgroundTint="#00FFFFFF"
+        android:contentDescription="@string/settings"
         android:onClick="settings"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_preferences"
-        android:contentDescription="@string/settings" />
+        app:srcCompat="@android:drawable/ic_menu_preferences" />
 
     <ImageButton
         android:id="@+id/help"
@@ -67,9 +51,40 @@
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="5dp"
         android:backgroundTint="#00FFFFFF"
+        android:contentDescription="@string/help"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_help"
-        android:contentDescription="@string/help" />
+        app:srcCompat="@android:drawable/ic_menu_help" />
+
+    <Button
+        android:id="@+id/maskSale"
+        android:layout_width="285dp"
+        android:layout_height="65dp"
+        android:layout_marginBottom="72dp"
+       android:background="@drawable/main_btn_model"
+        android:onClick="maskSale"
+        android:text="@string/mask_sale"
+        android:textColor="@color/teal_200"
+        android:textSize="35dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/timer"
+        android:layout_width="200dp"
+        android:layout_height="66dp"
+        android:layout_marginBottom="16dp"
+        android:onClick="timer"
+        android:text="@string/timer"
+        android:textColor="@color/teal_200"
+        android:textSize="35dp"
+        app:layout_constraintBottom_toTopOf="@+id/maskSale"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/union"
+        app:layout_constraintVertical_bias="1.0" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
