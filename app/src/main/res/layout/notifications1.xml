@@ -1,39 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/background_color">
+    android:layout_height="match_parent">
+
+    <View
+        android:id="@+id/union"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/header"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/btn1"
         android:layout_width="300dp"
         android:layout_height="60dp"
-        android:background="@drawable/custom_btn1"
-        android:text="@string/btntext1"
-        android:textColor="#000000"
-        android:textSize="15dp"
+        android:text= "@string/no_i_ll_get_a_new_oneh"
         app:layout_constraintBottom_toTopOf="@+id/btn2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.97" />
+        app:layout_constraintVertical_bias="0.964"
+        android:textColor="#000000"
+        android:textSize="18sp"/>
 
     <Button
         android:id="@+id/btn2"
         android:layout_width="300dp"
         android:layout_height="60dp"
         android:layout_marginBottom="35dp"
-        android:backgroundTint="@color/button"
-        android:text="Yes!"
-        android:textColor="#ffffff"
-        android:textSize="25dp"
+        android:text="@string/yes"
+        android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:textColor="#ffffff"
+        android:background="@color/button"/>
 
     <View
         android:id="@+id/view"
@@ -49,28 +58,28 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="360dp"
-        android:layout_height="250dp"
-        android:text="Did you bring a mask with you?"
+        android:layout_width="359dp"
+        android:layout_height="280dp"
+        android:text="@string/did_you_bring_a_mask_with_you"
         android:textColor="#000000"
-        android:textSize="25dp"
-        android:typeface="monospace"
+        android:textSize="60sp"
         app:layout_constraintBottom_toBottomOf="@+id/view"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintHorizontal_bias="0.307"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
 
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="115dp"
-        android:layout_height="100dp"
-        android:layout_marginBottom="8dp"
-        android:background="#00BF6E6E"
-        app:layout_constraintBottom_toTopOf="@+id/view"
+        android:id="@+id/imageView2"
+        android:layout_width="100sp"
+        android:layout_height="100sp"
+        android:contentDescription="@string/todo"
+        app:layout_constraintBottom_toTopOf="@+id/textView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/union"
         app:srcCompat="@android:drawable/stat_notify_error"
         app:tint="@color/button" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
