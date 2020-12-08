@@ -27,7 +27,7 @@
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         android:textColor="#ffffff"
-        android:background="@color/button" />
+        android:background="@drawable/custom_btn2" />
 
 
 
