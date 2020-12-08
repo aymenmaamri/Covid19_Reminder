@@ -58,14 +58,16 @@
 
     <Button
         android:id="@+id/maskSale"
-        android:layout_width="285dp"
-        android:layout_height="65dp"
-        android:layout_marginBottom="72dp"
-       android:background="@drawable/main_btn_model"
+        android:layout_width="221dp"
+        android:layout_height="62dp"
+        android:layout_marginBottom="76dp"
+        android:background="@drawable/main_btn_model"
         android:onClick="maskSale"
         android:text="@string/mask_sale"
-        android:textColor="@color/teal_200"
-        android:textSize="35dp"
+        android:textColor="@color/white"
+        android:textSize="30dp"
+        android:typeface="monospace"
+        app:backgroundTint="@null"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -77,14 +79,18 @@
         android:layout_marginBottom="16dp"
         android:onClick="timer"
         android:text="@string/timer"
-        android:textColor="@color/teal_200"
-        android:textSize="35dp"
+        android:textColor="@color/white"
+        android:textSize="30dp"
         app:layout_constraintBottom_toTopOf="@+id/maskSale"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/union"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="1.0"
+        app:backgroundTint="@null"
+        android:background="@drawable/main_btn_model"
+        android:typeface="monospace"
+        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
