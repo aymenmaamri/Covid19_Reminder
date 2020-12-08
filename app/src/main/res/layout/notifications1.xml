@@ -27,6 +27,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.964"
+        android:background="@drawable/custom_btn1"
         android:textColor="#000000"
         android:textSize="18sp"/>
 
@@ -42,7 +43,7 @@
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         android:textColor="#ffffff"
-        android:background="@color/button"/>
+        android:background="@drawable/custom_btn2"/>
 
     <View
         android:id="@+id/view"
