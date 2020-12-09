@@ -44,6 +44,7 @@
     <string name="previous">Previous</string>
     <string name="title_activity_maps">Map</string>
     <string name="timer">Timer</string>
+    <string name="time">Time</string>
     <string name="mask_sale">Mask Sale</string>
     <string name="help">Help</string>
     <string name="settings">Settings</string>
@@ -56,4 +57,8 @@
     <string name="okay">Okay!</string>
     <string name="please_put_your_mask_on">Please put your mask on!</string>
     <string name="todo">TODO</string>
+    <string name="i_am_wearing_the_mask">I am waering the mask</string>
+    <string name="permission_required_toast" />
+    <string name="permission_rationale_location" />
+    <string name="location_permission_denied" />
 </resources>
