@@ -83,14 +83,14 @@ public class MainActivity02 extends AppCompatActivity {
         if(timerStarted == false)
         {
             timerStarted = true;
-            //setButtonUI("STOP", R.color.red);
+            setButtonUI("STOP", R.color.red);
 
             startTimer();
         }
         else
         {
             timerStarted = false;
-            // setButtonUI("START", R.color.green);
+            setButtonUI("START", R.color.green);
 
             timerTask.cancel();
         }
