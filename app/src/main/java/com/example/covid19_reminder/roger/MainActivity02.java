@@ -56,7 +56,7 @@ public class MainActivity02 extends AppCompatActivity {
                 if(timerTask != null)
                 {
                     timerTask.cancel();
-                    setButtonUI("START", R.color.green);
+                    //setButtonUI("START", R.color.green);
                     time = 0.0;
                     timerStarted = false;
                     timerText.setText(formatTime(0,0,0));
@@ -83,14 +83,14 @@ public class MainActivity02 extends AppCompatActivity {
         if(timerStarted == false)
         {
             timerStarted = true;
-            setButtonUI("STOP", R.color.red);
+            //setButtonUI("STOP", R.color.red);
 
             startTimer();
         }
         else
         {
             timerStarted = false;
-            setButtonUI("START", R.color.green);
+            // setButtonUI("START", R.color.green);
 
             timerTask.cancel();
         }
