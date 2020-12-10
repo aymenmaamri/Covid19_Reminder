@@ -48,10 +48,8 @@
                     android:layout_gravity="end"
                     android:layout_marginStart="53dp"
                     android:layout_marginBottom="186dp"
-                    android:background="@color/red"
                     android:onClick="startStopTapped"
                     android:text="Start"
-                    android:textColor="@color/green"
                     android:textSize="30sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
@@ -62,14 +60,12 @@
                     android:layout_marginEnd="53dp"
                     android:onClick="resetTapped"
                     android:text="RESET"
-                    android:textColor="@color/red"
                     android:textSize="30sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:layout_gravity="end"
                     android:layout_marginStart="53dp"
-                    android:layout_marginBottom="186dp"
-                    android:background="@color/red" />
+                    android:layout_marginBottom="186dp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
