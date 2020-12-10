@@ -15,19 +15,21 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
+
     <Button
         android:id="@+id/btn3"
         android:layout_width="300dp"
         android:layout_height="60dp"
         android:layout_marginBottom="35dp"
+        android:background="@drawable/custom_btn2"
+        android:onClick="btn3"
         android:text="@string/okay"
+        android:textColor="#ffffff"
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        android:textColor="#ffffff"
-        android:background="@drawable/custom_btn2" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 
@@ -48,7 +50,7 @@
         android:layout_height="280dp"
         android:text="@string/please_put_your_mask_on"
         android:textColor="#000000"
-        android:textSize="60sp"
+        android:textSize="50sp"
         app:layout_constraintBottom_toBottomOf="@+id/view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.307"

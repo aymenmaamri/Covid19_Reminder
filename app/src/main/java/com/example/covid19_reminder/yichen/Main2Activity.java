@@ -16,11 +16,6 @@ import com.example.covid19_reminder.roger.MainActivity02;
 public class Main2Activity extends AppCompatActivity {
 
     public Button timer;
-    Button btn1;
-    Button btn2;
-    Button btn3;
-    Button btn4;
-    Button btn5;
 
 
     @Override
@@ -57,96 +52,32 @@ public class Main2Activity extends AppCompatActivity {
     }
 
     /** Called when the user taps the "Settings" button */
-    public void settings(View view)
+    public void settings(View view) {
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.notifications1);
-
-        btn1 = (Button) findViewById(R.id.btn1);
-        btn1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openmaps();
-            }
-        });
-    }
-            private void openmaps() {
-                Intent intent = new Intent(this, MapsActivity.class);
-                startActivity (intent);
-            }
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.notifications1);
-
-        btn2 = (Button) findViewById(R.id.btn2);
-        btn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openhomepage();
-            }
-        });
-    }
-    private void openhomepage() {
-        Intent intent = new Intent(this, activity_main2.xml);
-        startActivity (intent);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.notifications2);
-
-        btn3 = (Button) findViewById(R.id.btn3);
-        btn3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                opentimer();
-            }
-        });
-    }
-    private void opentimer() {
-        Intent intent = new Intent(this, MainActivity02.class);
-        startActivity (intent);
+    public void btn1(View view) {
+        Intent intent = new Intent(this, MapsActivity.class);
+        startActivity(intent);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.notification3);
-
-        btn4 = (Button) findViewById(R.id.btn4);
-        btn4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                opentimer();
-            }
-        });
+    public void btn2(View view) {
+        Intent intent = new Intent(this, Main2Activity.class);
+        startActivity(intent);
     }
-    private void opentimer() {
-        Intent intent = new Intent(this, MainActivity02.class);
-        startActivity (intent);
+    public void btn3(View view) {
+        Intent intent = new Intent(this, MainActivity01.class);
+        startActivity(intent);
+    }
+    public void btn4(View view) {
+        Intent intent = new Intent(this, MainActivity01.class);
+        startActivity(intent);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.notification3);
-
-        btn5 = (Button) findViewById(R.id.btn5);
-        btn5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openmaps();
-            }
-        });
-    }
-    private void openmaps() {
-        Intent intent = new Intent(this, Main2Activity.class)
-        startActivity (intent);
+    public void btn5(View view) {
+        Intent intent = new Intent(this, MapsActivity.class);
+        startActivity(intent);
     }
     }

@@ -20,30 +20,32 @@
         android:id="@+id/btn1"
         android:layout_width="300dp"
         android:layout_height="60dp"
-        android:text= "@string/no_i_ll_get_a_new_oneh"
+        android:background="@drawable/custom_btn1"
+        android:onClick="btn1"
+        android:text="@string/no_i_ll_get_a_new_oneh"
+        android:textColor="#000000"
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/btn2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.964"
-        android:background="@drawable/custom_btn1"
-        android:textColor="#000000"
-        android:textSize="18sp"/>
+        app:layout_constraintVertical_bias="0.964" />
 
     <Button
         android:id="@+id/btn2"
         android:layout_width="300dp"
         android:layout_height="60dp"
         android:layout_marginBottom="35dp"
+        android:background="@drawable/custom_btn2"
+        android:onClick="btn2"
         android:text="@string/yes"
+        android:textColor="#ffffff"
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        android:textColor="#ffffff"
-        android:background="@drawable/custom_btn2"/>
+        app:layout_constraintStart_toStartOf="parent" />
 
     <View
         android:id="@+id/view"
@@ -63,7 +65,7 @@
         android:layout_height="280dp"
         android:text="@string/did_you_bring_a_mask_with_you"
         android:textColor="#000000"
-        android:textSize="60sp"
+        android:textSize="50sp"
         app:layout_constraintBottom_toBottomOf="@+id/view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.307"
