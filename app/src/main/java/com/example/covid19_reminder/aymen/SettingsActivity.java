@@ -12,6 +12,13 @@ import com.example.covid19_reminder.R;
 
 public class SettingsActivity extends AppCompatActivity {
 
+    public static boolean enableNotifications;
+    public static boolean enableVibration;
+    public static String homeAddress;
+    public static String timeToNotify;
+    public static String distanceToNotify;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,4 +37,10 @@ public class SettingsActivity extends AppCompatActivity {
         Intent intent = new Intent(this, PlacesToNotify.class);
         startActivity(intent);
     }
+
+    private void onNotChange() {}
+
+    private void onVibChange() {}
+
+    private void onHomeAddressChange() {}
 }
