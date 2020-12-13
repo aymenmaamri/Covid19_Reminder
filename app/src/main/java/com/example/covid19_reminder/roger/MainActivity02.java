@@ -2,8 +2,13 @@ package com.example.covid19_reminder.roger;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.wifi.p2p.WifiP2pManager;
@@ -42,6 +47,8 @@ public class MainActivity02 extends AppCompatActivity {
             stopStartButton = (Button) findViewById(R.id.startStopButton);
 
             timer = new Timer();
+
+
         }
     public void resetTapped(View view)
     {
@@ -64,6 +71,8 @@ public class MainActivity02 extends AppCompatActivity {
                 }
             }
         });
+
+
 
         resetAlert.setNeutralButton("Cancel", new DialogInterface.OnClickListener()
         {
@@ -116,6 +125,7 @@ public class MainActivity02 extends AppCompatActivity {
                     {
                         time++;
                         timerText.setText(getTimerText());
+
                     }
                 });
             }
@@ -133,12 +143,40 @@ public class MainActivity02 extends AppCompatActivity {
         int minutes = ((rounded % 86400) % 3600) / 60;
         int hours = ((rounded % 86400) / 3600);
 
+        if(seconds == 4)
+        {
+           crateNotif();
+        }
+
+
         return formatTime(seconds, minutes, hours);
+    }
+
+    private void crateNotif() {
+
+        String message = "This is a notification";
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity02.this)
+                .setSmallIcon(R.drawable.ic_baseline_priority_high_24)
+                .setContentTitle("new Notification")
+                .setContentText(message)
+                .setAutoCancel(true);
+
+        Intent intent = new Intent(MainActivity02.this, Notification.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("message", message);
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(MainActivity02.this, 0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+        builder.setContentIntent(pendingIntent);
+
+        NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(0,builder.build());
+
     }
 
     private String formatTime(int seconds, int minutes, int hours)
     {
         return String.format("%02d",hours) + " : " + String.format("%02d",minutes) + " : " + String.format("%02d",seconds);
+
     }
 
 }
