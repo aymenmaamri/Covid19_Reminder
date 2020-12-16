@@ -39,8 +39,7 @@
         android:layout_marginTop="170dp"
         android:text="Notifications"
         android:textStyle="bold"
-        android:textSize="20dp"
-        android:onClick="onNotChange"/>
+        android:textSize="20dp" />
 
     <Switch
             android:id="@+id/vibrationSwitch"
@@ -52,7 +51,6 @@
             android:text="Vibration"
             android:textStyle="bold"
             android:textSize="20dp"
-            android:onClick="onVibChange"
             />
 
 
@@ -91,8 +89,7 @@
         android:layout_alignEnd="@id/timeToNotifySpinner"
         android:layout_marginTop="60dp"
         android:inputType="textPostalAddress"
-        android:text="What's your home address"
-        android:onClick="onHomeAddressChange"/>
+        android:text="What's your home address" />
 
 
     <TextView
