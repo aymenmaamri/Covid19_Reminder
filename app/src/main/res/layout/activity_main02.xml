@@ -46,8 +46,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
-                    android:layout_marginStart="53dp"
-                    android:layout_marginBottom="186dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginBottom="184dp"
                     android:onClick="startStopTapped"
                     android:text="Start"
                     android:textSize="30sp"
@@ -57,15 +57,14 @@
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="53dp"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="184dp"
                     android:onClick="resetTapped"
                     android:text="RESET"
                     android:textSize="30sp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_gravity="end"
-                    android:layout_marginStart="53dp"
-                    android:layout_marginBottom="186dp" />
+                    app:layout_constraintEnd_toEndOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -17,4 +17,22 @@
 
     </style>
 
+    <!--
+  Font family: Baloo
+  Line height: 57sp
+-->
+    <!-- styles.xml -->
+    <style name="text">
+
+        <item name="android:textSize">
+            36sp
+        </item>
+
+        <item name="android:textColor">
+            #FFFFFF
+        </item>
+
+    </style>
+
+
 </resources>

@@ -1,5 +1,6 @@
 package com.example.covid19_reminder.roger;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
@@ -63,10 +64,11 @@ public class MainActivity02 extends AppCompatActivity {
                 if(timerTask != null)
                 {
                     timerTask.cancel();
-                    //setButtonUI("START", R.color.green);
+                    setButtonUI("START", R.color.green);
                     time = 0.0;
                     timerStarted = false;
                     timerText.setText(formatTime(0,0,0));
+
 
                 }
             }
@@ -92,17 +94,18 @@ public class MainActivity02 extends AppCompatActivity {
         if(timerStarted == false)
         {
             timerStarted = true;
-            setButtonUI("STOP", R.color.red);
+            setButtonUI("PAUSE", R.color.red);
 
             startTimer();
         }
         else
         {
             timerStarted = false;
-            setButtonUI("START", R.color.green);
+            setButtonUI("CONTINUE", R.color.green);
 
             timerTask.cancel();
         }
+
     }
 
     private void setButtonUI(String start, int color)
@@ -154,10 +157,10 @@ public class MainActivity02 extends AppCompatActivity {
 
     private void crateNotif() {
 
-        String message = "This is a notification";
+        String message = "You will need to change your mask";
         NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity02.this)
                 .setSmallIcon(R.drawable.ic_baseline_priority_high_24)
-                .setContentTitle("new Notification")
+                .setContentTitle("Covid19_Reminder")
                 .setContentText(message)
                 .setAutoCancel(true);
 
@@ -179,4 +182,8 @@ public class MainActivity02 extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
 }
