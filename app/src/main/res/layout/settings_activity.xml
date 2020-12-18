@@ -19,7 +19,10 @@
         android:text="Get location with GPS"
         android:textColor="#3F51B5"
         android:textSize="10sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:focusable="true"
+        android:background="?android:attr/selectableItemBackground"
+        />
 
     <View
         android:id="@+id/union"
