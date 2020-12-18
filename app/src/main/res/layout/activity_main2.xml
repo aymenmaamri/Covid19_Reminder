@@ -62,45 +62,40 @@
 
     <Button
         android:id="@+id/maskSale"
-        android:layout_width="221dp"
-        android:layout_height="62dp"
+        android:layout_width="256dp"
+        android:layout_height="67dp"
         android:layout_marginBottom="76dp"
         android:background="@drawable/main_btn_model"
+        android:foreground="?android:attr/selectableItemBackground"
         android:onClick="maskSale"
         android:text="@string/mask_sale"
         android:textColor="@color/white"
         android:textSize="30dp"
+        android:theme="@android:style/ThemeOverlay.Material.Dark"
         android:typeface="monospace"
         app:backgroundTint="@null"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:theme="@android:style/ThemeOverlay.Material.Dark"
-        />
+        app:layout_constraintStart_toStartOf="parent" />
 
 
     <Button
         android:id="@+id/timer"
-        android:layout_width="200dp"
-        android:layout_height="66dp"
+        android:layout_width="221dp"
+        android:layout_height="62dp"
         android:layout_marginBottom="16dp"
+        android:background="@drawable/main_btn_model"
+        android:foreground="?android:attr/selectableItemBackground"
         android:onClick="timer"
         android:text="@string/timer"
         android:textColor="@color/white"
         android:textSize="30dp"
+        android:theme="@android:style/ThemeOverlay.Material.Dark"
+        android:typeface="monospace"
+        app:backgroundTint="@null"
         app:layout_constraintBottom_toTopOf="@+id/maskSale"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.492"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/union"
-        app:layout_constraintVertical_bias="1.0"
-        app:backgroundTint="@null"
-        android:background="@drawable/main_btn_model"
-        android:typeface="monospace"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:theme="@android:style/ThemeOverlay.Material.Dark"
-        />
-
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
