@@ -4,6 +4,8 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Looper;
@@ -32,11 +34,17 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
+import java.io.IOException;
+import java.util.List;
+
 public class Main2Activity extends AppCompatActivity {
+
+    public  Address addressToNotify;
 
     private static final String TAG = "Main2Activity";
     int LOCATION_REQUEST_CODE = 10001;
 
+    private Geocoder geocoder;
     private FusedLocationProviderClient fusedLocationProviderClient;
     private LocationRequest locationRequest;
     public Button timer;
@@ -51,7 +59,21 @@ public class Main2Activity extends AppCompatActivity {
             for (Location location : locationResult.getLocations()) {
                 Log.d(TAG, "onLocationResult: " + location.toString());
                 Log.d(TAG, "onLocationResult: second part working");
+                Address extractedAddress = null;
+                try {
+                     extractedAddress = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1).get(0);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                if (extractedAddress != null) {
+                    Log.d(TAG, "onAddressExtraction: " + extractedAddress.getThoroughfare());
+                    Log.d(TAG, "onAddressExtraction2: " + addressToNotify.getAddressLine(0));
+                }
+                if (extractedAddress.getThoroughfare().equals(addressToNotify.getThoroughfare())){
+                    Log.d(TAG, "SUCCESS: finalyy PASSEDDDDDDD");
+                }
             }
+
         }
     };
 
@@ -59,6 +81,7 @@ public class Main2Activity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
 
@@ -66,6 +89,13 @@ public class Main2Activity extends AppCompatActivity {
         locationRequest.setInterval(4000);
         locationRequest.setFastestInterval(2000);
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        geocoder = new Geocoder(this);
+        try {
+            addressToNotify = geocoder.getFromLocationName("Hannover Hauptbahnhof", 1).get(0);
+            Log.d(TAG, "onCreate: " + addressToNotify.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
