@@ -44,7 +44,6 @@ import java.util.Locale;
 public class SettingsActivity extends AppCompatActivity{
 
 
-    private static final int MY_PERMISSION_REQUEST_ACCESS_LOCATION = 1;
     private FusedLocationProviderClient fusedLocationProviderClient;
     TextView user_location;
 
@@ -184,69 +183,9 @@ public class SettingsActivity extends AppCompatActivity{
 
 
 
-    private void fetchLocation() {
-       if (ContextCompat.checkSelfPermission(
-                SettingsActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) !=
-                PackageManager.PERMISSION_GRANTED) {
-            // You can use the API that requires the permission.
-            if(ActivityCompat.shouldShowRequestPermissionRationale(SettingsActivity.this,
-                    Manifest.permission.ACCESS_COARSE_LOCATION)) {
-
-                new AlertDialog.Builder(this)
-                        .setTitle("Required Location Permission")
-                        .setMessage("access location permission is required")
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                ActivityCompat.requestPermissions(SettingsActivity.this,
-                                        new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
-                                        MY_PERMISSION_REQUEST_ACCESS_LOCATION);
-                            }
-                        })
-                        .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        })
-                        .create()
-                        .show();
 
 
-            } else {
-                ActivityCompat.requestPermissions(SettingsActivity.this,
-                        new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
-                        MY_PERMISSION_REQUEST_ACCESS_LOCATION);
-            }
-        } else {
-            fusedLocationProviderClient.getLastLocation()
-                    .addOnSuccessListener(this, new OnSuccessListener<Location>() {
-                        @Override
-                        public void onSuccess(Location location) {
-                            // Got last known location. In some rare situations this can be null.
-                            if (location != null) {
-                                // Logic to handle location object
-                                Double latitude = location.getLatitude();
-                                Double longitude = location.getLongitude();
-                                user_location.setText("Latitude = " + latitude + ",longitude = " + longitude + " address: " +  location.toString());
-                            } else {
-                                user_location.setText("location is undefined");
-                            }
-                        }
-                    });
-        }
-    }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if(requestCode == MY_PERMISSION_REQUEST_ACCESS_LOCATION){
-            if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-
-            }  else {
-
-            }
-        }
-    }
 
 
 
