@@ -14,20 +14,32 @@ package com.example.covid19_reminder.yichen;
 // limitations under the License.
 
 import com.example.covid19_reminder.R;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMyLocationButtonClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMyLocationClickListener;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PointOfInterest;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.AutocompletePrediction;
+import com.google.android.libraries.places.api.model.AutocompleteSessionToken;
+import com.google.android.libraries.places.api.model.RectangularBounds;
+import com.google.android.libraries.places.api.model.TypeFilter;
+import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest;
+import com.google.android.libraries.places.api.net.PlacesClient;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationListener;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -35,7 +47,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
+
+import java.util.List;
 
 /**
  * This demo shows how GMS Location can be used to check for changes to the users location.  The
@@ -48,7 +64,7 @@ public class MapsActivity extends AppCompatActivity
         OnMyLocationButtonClickListener,
         OnMyLocationClickListener,
         OnMapReadyCallback,
-        ActivityCompat.OnRequestPermissionsResultCallback, GoogleMap.OnPoiClickListener {
+        ActivityCompat.OnRequestPermissionsResultCallback, GoogleMap.OnPoiClickListener, View.OnClickListener, LocationListener {
 
     /**
      * Request code for location permission request.
@@ -56,6 +72,9 @@ public class MapsActivity extends AppCompatActivity
      * @see #onRequestPermissionsResult(int, String[], int[])
      */
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
+    private static final String TAG = "MapsActivity";
+    private double latitude, longtitude;
+    private int ProximityRadius = 1000;
 
     /**
      * Flag indicating whether a requested permission has been denied after returning in
@@ -74,6 +93,7 @@ public class MapsActivity extends AppCompatActivity
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+
     }
 
     @Override
@@ -84,8 +104,8 @@ public class MapsActivity extends AppCompatActivity
         map.setOnPoiClickListener(this);
         map.getUiSettings().setAllGesturesEnabled(true);
         map.getUiSettings().setZoomControlsEnabled(true);
-        Marker hannover = map.addMarker(new MarkerOptions().position(new LatLng(52.3797505, 9.6914318)));
-        hannover.setTitle("Hannover");
+//        Marker hannover = map.addMarker(new MarkerOptions().position(new LatLng(52.3797505, 9.6914318)));
+//        hannover.setTitle("Hannover");
 
         enableMyLocation();
         if (map != null) {
@@ -96,6 +116,8 @@ public class MapsActivity extends AppCompatActivity
                 }
             });
         }
+        onMyLocationButtonClick();
+
 
     }
 
@@ -119,7 +141,7 @@ public class MapsActivity extends AppCompatActivity
 
     @Override
     public boolean onMyLocationButtonClick() {
-        Toast.makeText(this, "MyLocation button clicked", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Go to my location", Toast.LENGTH_SHORT).show();
         // Return false so that we don't consume the event and the default behavior still occurs
         // (the camera animates to the user's current position).
 
@@ -177,4 +199,56 @@ public class MapsActivity extends AppCompatActivity
                         " Longitude:" + poi.latLng.longitude,
                 Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    public void onClick(View v) {
+        String apotheke = "apotheke", market = "supermarket";
+        Object transferData[] = new Object[2];
+        GetNearbyPlaces getNearbyPlaces = new GetNearbyPlaces();
+
+
+        switch (v.getId()) {
+            case R.id.btnApotheke:
+                map.clear();
+                transferData[0] = map;
+                    String url = getUrl(latitude, longtitude, apotheke);
+                    transferData[1] = url;
+                    getNearbyPlaces.execute(transferData);
+
+                Toast.makeText(this, "Search for nearby apothekes",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Showing nearby apothekes",Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.btnMarket:
+                map.clear();
+                    String url1 = getUrl(latitude, longtitude, market);
+                    transferData[0] = map;
+                    transferData[1] = url1;
+                    getNearbyPlaces.execute(transferData);
+
+                Toast.makeText(this, "Search for nearby supermarkets",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Showing nearby supermarkets",Toast.LENGTH_SHORT).show();
+                break;
+        }
+    }
+
+
+    private String getUrl(double latitude, double longtitude, String nearbyPlace) {
+            StringBuilder googleURL = new StringBuilder("https://maps.googleapis.com/maps/api/place/findplacefromtext/json?");
+        googleURL.append("input=" + nearbyPlace + "&inputtype=textquery&fields=formatted_address,name,geometry");
+            googleURL.append("&locationbias=circle:" + ProximityRadius + "@" + latitude + "," + longtitude);
+            googleURL.append("&key=" + "AIzaSyB35M73rZiL-jWGUGpGZOSHtIeyugTxmuE");
+
+            Log.d("MapsActivity", "URL: " + googleURL.toString());
+
+            return googleURL.toString();
+    }
+
+    @Override
+    public void onLocationChanged(@NonNull Location location) {
+        latitude = location.getLatitude();
+        longtitude = location.getLongitude();
+
+    }
 }
+
