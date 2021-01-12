@@ -163,10 +163,7 @@ public class SettingsActivity extends AppCompatActivity{
                                     , Locale.getDefault());
                             List<Address> addresses = geocoder.getFromLocation(
                                     location.getLatitude(), location.getLongitude(), 1);
-                            user_location.setText(Html.fromHtml(
-                                    "<font color='#6200EE'><b>Address : </b><br></font>"
-                                            + addresses.get(0).getAddressLine(0)
-                            ));
+                            user_location.setText(addresses.get(0).getAddressLine(0));
                         } catch (IOException e){
                             e.printStackTrace();
                         }

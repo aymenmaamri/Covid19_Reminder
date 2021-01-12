@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.covid19_reminder">
+
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -10,12 +11,13 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <!-- Required only when requesting background location access on
-     Android 10 (API level 29) and higher. -->
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
-    <!-- To request foreground location access, declare one of these permissions. -->
+    <!--
+ Required only when requesting background location access on
+     Android 10 (API level 29) and higher.
+    -->
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" /> <!-- To request foreground location access, declare one of these permissions. -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     <application
         android:fullBackupContent="@xml/backup_descriptor"
         android:icon="@mipmap/ic_launcher"
@@ -24,6 +26,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Covid19_Reminder"
         tools:ignore="AllowBackup">
+        <receiver
+            android:name=".yichen.GeofenceBroadcast"
+            android:enabled="true"
+            android:exported="true"></receiver>
+
         <activity android:name=".roger.MainActivity02" />
         <activity android:name=".roger.MainActivity01" />
         <activity android:name=".aymen.PlacesToNotify" />
@@ -55,6 +62,5 @@
             android:name=".aymen.SettingsActivity"
             android:label="@string/app_name" />
     </application>
-
 
 </manifest>
