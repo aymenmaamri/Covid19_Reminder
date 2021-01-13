@@ -21,18 +21,18 @@
         android:layout_width="300dp"
         android:layout_height="60dp"
         android:background="@drawable/custom_btn1"
+        android:foreground="?android:attr/selectableItemBackground"
         android:onClick="btn4"
         android:text="@string/remind_me_later"
         android:textColor="#000000"
         android:textSize="20sp"
+        android:theme="@android:style/ThemeOverlay.Material.Dark"
         app:layout_constraintBottom_toTopOf="@+id/btn5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.964"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:theme="@android:style/ThemeOverlay.Material.Dark"/>
+        app:layout_constraintVertical_bias="0.964" />
 
     <Button
         android:id="@+id/btn5"
@@ -69,7 +69,7 @@
         android:layout_height="250dp"
         android:text="@string/you_have_worn_the_mask_for_4_hours_please_change_it"
         android:textColor="#000000"
-        android:textSize="40sp"
+        android:textSize="30sp"
         android:typeface="monospace"
         app:layout_constraintBottom_toBottomOf="@+id/view"
         android:fontFamily="monospace"
