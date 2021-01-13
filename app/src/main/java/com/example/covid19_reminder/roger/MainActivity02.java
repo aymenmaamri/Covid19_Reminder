@@ -4,15 +4,20 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.net.Uri;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.RingtoneManager;
 import android.net.wifi.p2p.WifiP2pManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
@@ -29,12 +34,18 @@ import java.util.TimerTask;
 
 public class MainActivity02 extends AppCompatActivity {
 
+    private final String CHANNEL_ID = "personal_notifications";
+    private final int NOTIFICATION_ID = 001;
     TextView timerText;
     Button stopStartButton;
 
     Timer timer;
     TimerTask timerTask;
     Double time = 0.0;
+
+    private int messageCount = 0;
+    private static Uri alarmSound;
+    private final long[] pattern = { 100, 300, 300, 300};
 
     boolean timerStarted = false;
 
@@ -149,6 +160,7 @@ public class MainActivity02 extends AppCompatActivity {
         if(seconds == 4)
         {
            crateNotif();
+
         }
 
 
@@ -158,21 +170,28 @@ public class MainActivity02 extends AppCompatActivity {
     private void crateNotif() {
 
         String message = "You will need to change your mask";
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity02.this)
+        createNotificationChannel();
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this,CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_baseline_priority_high_24)
                 .setContentTitle("Covid19_Reminder")
                 .setContentText(message)
-                .setAutoCancel(true);
+                .setAutoCancel(true)
+                .setSound(alarmSound)
+                .setVibrate(pattern)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
-        Intent intent = new Intent(MainActivity02.this, Notification.class);
+        Intent intent = new Intent(MainActivity02.this, MainActivity03notif.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("message", message);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(MainActivity02.this, 0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
         builder.setContentIntent(pendingIntent);
 
-        NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(0,builder.build());
+        alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
+        notificationManagerCompat.notify(NOTIFICATION_ID,builder.build());
+
 
     }
 
@@ -182,8 +201,17 @@ public class MainActivity02 extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
+    public void createNotificationChannel(){
+
+        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
+            CharSequence name = "Personal Notifications";
+            String description = "Include all the personal notifications";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID, name, importance);
+            notificationChannel.setDescription(description);
+            NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.createNotificationChannel(notificationChannel);
+        }
     }
+
 }
