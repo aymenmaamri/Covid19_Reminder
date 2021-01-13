@@ -26,7 +26,7 @@ public class MainActivity01 extends AppCompatActivity {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent otherActivity2 = new Intent(getApplicationContext(), MainActivity02.class);
+                Intent otherActivity2 = new Intent(getApplicationContext(), MainActivity04bring.class);
                 startActivity(otherActivity2);
                 finish();
             }

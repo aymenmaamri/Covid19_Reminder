@@ -10,10 +10,11 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <!-- Required only when requesting background location access on
-     Android 10 (API level 29) and higher. -->
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
-    <!-- To request foreground location access, declare one of these permissions. -->
+    <!--
+ Required only when requesting background location access on
+     Android 10 (API level 29) and higher.
+    -->
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" /> <!-- To request foreground location access, declare one of these permissions. -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
@@ -24,6 +25,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Covid19_Reminder"
         tools:ignore="AllowBackup">
+        <activity android:name=".roger.MainActivity04bring"></activity>
+        <activity android:name=".roger.MainActivity03notif" />
         <activity android:name=".roger.MainActivity02" />
         <activity android:name=".roger.MainActivity01" />
         <activity android:name=".aymen.PlacesToNotify" />
@@ -55,6 +58,5 @@
             android:name=".aymen.SettingsActivity"
             android:label="@string/app_name" />
     </application>
-
 
 </manifest>
