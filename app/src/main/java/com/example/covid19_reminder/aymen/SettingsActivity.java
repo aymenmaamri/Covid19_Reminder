@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -68,6 +69,13 @@ public class SettingsActivity extends AppCompatActivity{
         setContentView(R.layout.settings_activity);
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+
+        SharedPreferences sharedPref = getSharedPreferences("Settings", Context.MODE_PRIVATE);
+        enableNotifications = sharedPref.getBoolean("enableNotifications",false);
+        enableVibration = sharedPref.getBoolean("enableVibration",false);
+        homeAddress = sharedPref.getString("homeAddress","");
+        timeToNotify = sharedPref.getInt("timeToNotify",0);
+        distanceToNotify = sharedPref.getInt("distanceToNotify",0);
 
 
         //save the home address from input
@@ -176,10 +184,26 @@ public class SettingsActivity extends AppCompatActivity{
             ActivityCompat.requestPermissions(SettingsActivity.this
             , new  String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
         }
+
     }
+//    public static boolean enableNotifications = false;
+//    public static boolean enableVibration = false;
+//    public static String homeAddress = "";
+//    public static int timeToNotify = 0;
+//    public static int distanceToNotify = 0;
 
-
-
+    @Override
+    protected void onStop() {
+        SharedPreferences sharedPref = getSharedPreferences("Settings", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putBoolean("enableNotifications", enableNotifications);
+        editor.putBoolean("enableVibration",enableVibration);
+        editor.putString("homeAddress",homeAddress);
+        editor.putInt("timeToNotify",timeToNotify);
+        editor.putInt("distanceToNotify",distanceToNotify);
+        editor.apply();
+        super.onStop();
+    }
 
 
 

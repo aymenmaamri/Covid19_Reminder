@@ -7,11 +7,14 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -19,8 +22,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.covid19_reminder.R;
+import com.example.covid19_reminder.aymen.SettingsActivity;
 
 import java.util.Locale;
 import java.util.Timer;
@@ -35,6 +40,9 @@ public class MainActivity02 extends AppCompatActivity {
     Timer timer;
     TimerTask timerTask;
     Double time = 0.0;
+    int timeToNotify = 0;
+    boolean notification;
+    boolean vibration;
 
     boolean timerStarted = false;
 
@@ -43,6 +51,13 @@ public class MainActivity02 extends AppCompatActivity {
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main02);
+
+            SharedPreferences sharedPref = getSharedPreferences(
+                    "Settings", MODE_PRIVATE);
+            timeToNotify = sharedPref.getInt("timeToNotify", 0)+1;
+            notification = sharedPref.getBoolean("enableNotifications",true);
+            vibration = sharedPref.getBoolean("enableVibration",true);
+            Toast.makeText(this,"Timer will notify you after" + timeToNotify + "hours",Toast.LENGTH_SHORT);
 
             timerText = (TextView) findViewById(R.id.timerText);
             stopStartButton = (Button) findViewById(R.id.startStopButton);
@@ -146,7 +161,7 @@ public class MainActivity02 extends AppCompatActivity {
         int minutes = ((rounded % 86400) % 3600) / 60;
         int hours = ((rounded % 86400) / 3600);
 
-        if(seconds == 4)
+        if(seconds == timeToNotify&notification)
         {
            crateNotif();
         }
@@ -155,24 +170,47 @@ public class MainActivity02 extends AppCompatActivity {
         return formatTime(seconds, minutes, hours);
     }
 
+
     private void crateNotif() {
 
-        String message = "You will need to change your mask";
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity02.this)
-                .setSmallIcon(R.drawable.ic_baseline_priority_high_24)
-                .setContentTitle("Covid19_Reminder")
-                .setContentText(message)
-                .setAutoCancel(true);
+        int NOTIFICATION_ID = 234;
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        Intent intent = new Intent(MainActivity02.this, Notification.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra("message", message);
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            String CHANNEL_ID = "my_channel_01";
+            CharSequence name = "my_channel";
+            String Description = "This is my channel";
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, name, importance);
+            mChannel.setDescription(Description);
+            mChannel.enableLights(true);
+            mChannel.setLightColor(Color.RED);
+            mChannel.enableVibration(true);
+            mChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+            mChannel.setShowBadge(false);
+            notificationManager.createNotificationChannel(mChannel);
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(MainActivity02.this, 0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
-        builder.setContentIntent(pendingIntent);
 
-        NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(0,builder.build());
+            String message = "You will need to change your mask";
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                    .setSmallIcon(R.drawable.ic_baseline_priority_high_24)
+                    .setContentTitle("Covid19_Reminder")
+                    .setContentText(message)
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+            if(vibration){
+                builder.setVibrate(mChannel.getVibrationPattern());
+            }
+
+            Intent intent = new Intent(this, Notification.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.putExtra("message", message);
+
+            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            builder.setContentIntent(pendingIntent);
+
+            notificationManager.notify(0, builder.build());
+        }
 
     }
 
