@@ -12,9 +12,6 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -24,7 +21,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.covid19_reminder.R;
-import com.example.covid19_reminder.ibra.Notification2Activity;
 
 import java.util.Locale;
 import java.util.Timer;
@@ -39,9 +35,6 @@ public class MainActivity02 extends AppCompatActivity {
     Timer timer;
     TimerTask timerTask;
     Double time = 0.0;
-    private int messageCount = 0;
-    private static Uri alarmSound;
-    private final long[] pattern = { 100, 300, 300, 300};
 
     boolean timerStarted = false;
 
@@ -169,18 +162,14 @@ public class MainActivity02 extends AppCompatActivity {
                 .setSmallIcon(R.drawable.ic_baseline_priority_high_24)
                 .setContentTitle("Covid19_Reminder")
                 .setContentText(message)
-                .setAutoCancel(true)
-                .setSound(alarmSound)
-                .setVibrate(pattern);
+                .setAutoCancel(true);
 
-        Intent intent = new Intent(MainActivity02.this, MainActivity03notif.class);
+        Intent intent = new Intent(MainActivity02.this, Notification.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("message", message);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(MainActivity02.this, 0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
         builder.setContentIntent(pendingIntent);
-
-        alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
         NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(0,builder.build());
@@ -193,36 +182,8 @@ public class MainActivity02 extends AppCompatActivity {
 
     }
 
-    /*@Override
-    protected void onStop() {
-        super.onStop();
-        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        //editor.putLong("millisLeft", time);
-        editor.putBoolean("timerRunning", timerStarted);
-        //editor.putLong("endTime", timerTask);
-        editor.apply();
-        if (timerTask != null) {
-            timerTask.cancel();
-        }
-    }
-
     @Override
-    protected void onStart() {
-        super.onStart();
-        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
-        timerStarted = prefs.getBoolean("timerRunning", false);
-        getTimerText();
-
-        if (timerStarted) {
-            //time = prefs.getLong("endTime", 0);
-            time = time - System.currentTimeMillis();
-            if (time < 0) {
-                time = 0;
-                timerStarted = false;
-                getTimerText();
-            } else {
-                startTimer();
-            }
-        }*/
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
 }
