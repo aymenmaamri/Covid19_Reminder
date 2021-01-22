@@ -134,6 +134,7 @@ public class TimerActivity2 extends AppCompatActivity {
         mEditTextInput.setEnabled(false);
         mButtonSet.setEnabled(false);
         mTimerRunning = true;
+        mTimerPaused = false;
     }
 
     private void pauseTimer(){
@@ -243,8 +244,9 @@ public class TimerActivity2 extends AppCompatActivity {
         String json = gson.toJson(wears);
         editor.putString("save", json);
         editor.putBoolean("timerRunning", mTimerRunning);
-        editor.putLong("timeLeft", timeLeft);
-        editor.putBoolean("isTimerPaused", mTimerPaused);
+            editor.putLong("timeLeft", timeLeft);
+            editor.putBoolean("isTimerPaused", mTimerPaused);
+
         editor.apply();
     }
 
@@ -252,6 +254,18 @@ public class TimerActivity2 extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         SharedPreferences preferences = getSharedPreferences("prefs", MODE_PRIVATE);
+        boolean timePaused = preferences.getBoolean("isTimerPaused", false);
+        if (timePaused) {
+            timeLeft = preferences.getLong("timeLeft", 0);
+            formatTime(timeLeft);
+            mTimerRunning = preferences.getBoolean("timerRunning", false);
+            mButtonStartPause.setImageResource(R.drawable.ic_baseline_play_circle_outline_24);
+        } else {
+            Log.d(TAG, "Test OK");
+            mButtonStartPause.setImageResource(R.drawable.ic_baseline_pause_circle_outline_24);
+            mTimerRunning = true;
+            mTimerPaused = false;
+        }
         Gson gson = new Gson();
         String json = preferences.getString("save", null);
         Type type = new TypeToken<ArrayList<String>>() {}.getType();
@@ -260,12 +274,7 @@ public class TimerActivity2 extends AppCompatActivity {
             wears = gson.fromJson(json, type);
             updateWears();
         }
-        boolean timePaused = preferences.getBoolean("isTimerPaused", false);
-        if (timePaused) {
-            timeLeft = preferences.getLong("timeLeft", 0);
-            formatTime(timeLeft);
-            mTimerRunning = preferences.getBoolean("timerRunning", false);
-        }
+
 
     }
 }
