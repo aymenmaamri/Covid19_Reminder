@@ -16,6 +16,7 @@
     -->
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" /> <!-- To request foreground location access, declare one of these permissions. -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
         android:fullBackupContent="@xml/backup_descriptor"
@@ -25,11 +26,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Covid19_Reminder"
         tools:ignore="AllowBackup">
+        <service android:name=".aymen.TimerService" />
         <activity android:name=".roger.MainActivity04bring"></activity>
         <activity android:name=".roger.MainActivity03notif" />
         <activity android:name=".roger.MainActivity02" />
         <activity android:name=".roger.MainActivity01" />
         <activity android:name=".aymen.PlacesToNotify" />
+        <activity android:name=".aymen.TimerActivity" />
+        <activity android:name=".aymen.TimerActivity2" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").

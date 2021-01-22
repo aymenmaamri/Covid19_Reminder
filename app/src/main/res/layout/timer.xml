@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/background_blue"
+    tools:context=".aymen.TimerActivity2">
+
+
+    <TextView
+        android:id="@+id/text_view_timer"
+        android:layout_width="172dp"
+        android:layout_height="56dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="193dp"
+        android:text="04.00.00"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/added_time"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="261dp"
+        android:layout_marginBottom="422dp"
+        android:background="#E7F2F6"
+        android:hint="Hours"
+        android:inputType="number"
+        android:maxLength="4"
+        android:textColor="#00BCD4" />
+
+    <Button
+        android:id="@+id/button_set"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="142dp"
+        android:layout_marginBottom="422dp"
+        android:background="#A62A2A"
+        android:checkable="false"
+        android:text="Set Timer"
+        android:textColor="#F44336"
+        android:textColorHighlight="#FFFFFF"
+        android:textColorLink="#A12E2E" />
+
+    <ImageButton
+        android:id="@+id/start_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="33dp"
+        android:layout_marginEnd="115dp"
+        android:layout_marginBottom="561dp"
+        android:background="#00FF2222"
+        android:clickable="true"
+        android:src="@drawable/ic_baseline_play_circle_outline_24" />
+
+    <ImageButton
+        android:id="@+id/reset_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="39dp"
+        android:layout_marginTop="33dp"
+        android:layout_marginEnd="29dp"
+        android:layout_marginBottom="558dp"
+        android:background="#00E91EAF"
+        android:clickable="true"
+        android:src="@drawable/ic_baseline_cancel_24" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="326dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="52dp"
+        android:layout_marginBottom="374dp"
+        android:text="previous mask wears:"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        android:typeface="monospace" />
+
+    <TextView
+        android:id="@+id/adviceText"
+        android:layout_width="314dp"
+        android:layout_height="62dp"
+        android:layout_above="@+id/added_time"
+        android:layout_below="@+id/text_view_timer"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="17dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="62dp"
+        android:layout_marginBottom="15dp"
+        android:text="according to specialists the advisable period to wear a mask is 4 hours. please click here for further information."
+        android:textAlignment="gravity"
+        android:textColor="#F3EFEF"
+        android:textSize="16sp"
+        android:textStyle="italic" />
+
+    <TextView
+        android:id="@+id/wears_view"
+        android:layout_width="308dp"
+        android:layout_height="288dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="293dp"
+        android:layout_marginEnd="69dp"
+        android:layout_marginBottom="76dp"
+        android:background="@drawable/text_box"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="#F4EFEF"
+        android:textSize="20sp"
+        />
+
+
+
+
+</RelativeLayout>

@@ -29,6 +29,8 @@ import androidx.core.content.ContextCompat;
 
 import com.example.covid19_reminder.R;
 import com.example.covid19_reminder.aymen.SettingsActivity;
+import com.example.covid19_reminder.aymen.TimerActivity;
+import com.example.covid19_reminder.aymen.TimerActivity2;
 import com.example.covid19_reminder.roger.MainActivity01;
 import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -48,9 +50,12 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Main2Activity extends AppCompatActivity {
+
+    public static List<UserAddress> userAddresses = new ArrayList<UserAddress>();
 
     private static final String CHANNEL_1_ID = "movement_notifications";
     private static final String CHANNEL_2_ID = "timer_notifications";
@@ -70,6 +75,29 @@ public class Main2Activity extends AppCompatActivity {
     public Button timer;
 
 
+
+
+
+    public void getAddresses(){
+        try {
+            List<Address> addresses = geocoder.getFromLocationName("bahnhof", 10);
+            for(Address address : addresses) {
+                Log.d(TAG, "List: " + address.toString());
+            }
+
+        } catch (IOException e) {
+            Log.d(TAG, "ListFailure: ");
+            e.printStackTrace();
+        }
+    }
+
+
+
+
+
+
+
+
     LocationCallback locationCallback = new LocationCallback() {
         @Override
         public void onLocationResult(LocationResult locationResult) {
@@ -77,8 +105,6 @@ public class Main2Activity extends AppCompatActivity {
                 return;
             }
             for (Location location : locationResult.getLocations()) {
-                Log.d(TAG, "onLocationResult: " + location.toString());
-                Log.d(TAG, "onLocationResult: second part working");
                 Address extractedAddress = null;
                 try {
                     if (location != null) {
@@ -140,7 +166,7 @@ public class Main2Activity extends AppCompatActivity {
             addGeofence(latLng, 50);
         }
 
-
+        getAddresses();
         //pushNotification();
 
     }
@@ -351,7 +377,7 @@ public class Main2Activity extends AppCompatActivity {
 
 
     public void timer(View view) {
-        Intent intent = new Intent(this, MainActivity01.class);
+        Intent intent = new Intent(this, TimerActivity2.class);
         startActivity(intent);
     }
 
