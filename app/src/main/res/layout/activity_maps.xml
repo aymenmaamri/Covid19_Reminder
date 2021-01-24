@@ -19,30 +19,38 @@
 
     </androidx.fragment.app.FragmentContainerView>
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:visibility="visible"
-        >
+        android:layout_marginBottom="30dp"
+        android:visibility="visible">
 
-    <Button
-        android:id="@+id/btnMarket"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:onClick="onClick"
-        android:text="Supermarkets" />
+        <Button
+            android:id="@+id/btnMarket"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btnApotheke"
+            android:layout_marginStart="10dp"
+            android:fontFamily="monospace"
+            android:onClick="onClick"
+            android:text="Supermarkt"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/btnApotheke"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="onClick"
-        android:text="Apotheke" />
+        <Button
+            android:id="@+id/btnApotheke"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:fontFamily="monospace"
+            android:onClick="onClick"
+            android:text="Apotheke"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            android:textStyle="bold" />
 
     </RelativeLayout>
 

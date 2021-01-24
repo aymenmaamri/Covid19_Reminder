@@ -16,6 +16,7 @@ package com.example.covid19_reminder.yichen;
 import com.example.covid19_reminder.R;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMyLocationButtonClickListener;
@@ -75,6 +76,7 @@ public class MapsActivity extends AppCompatActivity
     private static final String TAG = "MapsActivity";
     private double latitude, longtitude;
     private int ProximityRadius = 1000;
+    private boolean zoom = false;
 
     /**
      * Flag indicating whether a requested permission has been denied after returning in
@@ -92,8 +94,6 @@ public class MapsActivity extends AppCompatActivity
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
-
     }
 
     @Override
@@ -105,20 +105,22 @@ public class MapsActivity extends AppCompatActivity
         map.getUiSettings().setAllGesturesEnabled(true);
         map.getUiSettings().setZoomControlsEnabled(true);
 //        Marker hannover = map.addMarker(new MarkerOptions().position(new LatLng(52.3797505, 9.6914318)));
-//        hannover.setTitle("Hannover");
 
         enableMyLocation();
         if (map != null) {
             map.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
                 @Override
                 public void onMyLocationChange(Location arg0) {
-                    map.addMarker(new MarkerOptions().position(new LatLng(arg0.getLatitude(), arg0.getLongitude())).title("It's Me!"));
+                    latitude = arg0.getLatitude();
+                    longtitude = arg0.getLongitude();
+                    if(zoom){
+                        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longtitude), 15);
+                        map.animateCamera(cameraUpdate);
+                        zoom = false;
+                    }
                 }
             });
         }
-        onMyLocationButtonClick();
-
-
     }
 
     /**
@@ -136,6 +138,7 @@ public class MapsActivity extends AppCompatActivity
             PermissionUtils.requestPermission(this, LOCATION_PERMISSION_REQUEST_CODE,
                     Manifest.permission.ACCESS_FINE_LOCATION, true);
         }
+        zoom = true;
         // [END maps_check_location_permission]
     }
 
@@ -193,19 +196,15 @@ public class MapsActivity extends AppCompatActivity
 
     @Override
     public void onPoiClick(PointOfInterest poi) {
-        Toast.makeText(getApplicationContext(), "Clicked: " +
-                        poi.name + "\nPlace ID:" + poi.placeId +
-                        "\nLatitude:" + poi.latLng.latitude +
-                        " Longitude:" + poi.latLng.longitude,
+        Toast.makeText(getApplicationContext(), poi.name,
                 Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onClick(View v) {
-        String apotheke = "apotheke", market = "supermarket";
+        String apotheke = "pharmacy", market = "supermarket";
         Object transferData[] = new Object[2];
         GetNearbyPlaces getNearbyPlaces = new GetNearbyPlaces();
-
 
         switch (v.getId()) {
             case R.id.btnApotheke:
@@ -234,9 +233,11 @@ public class MapsActivity extends AppCompatActivity
 
 
     private String getUrl(double latitude, double longtitude, String nearbyPlace) {
-            StringBuilder googleURL = new StringBuilder("https://maps.googleapis.com/maps/api/place/findplacefromtext/json?");
-        googleURL.append("input=" + nearbyPlace + "&inputtype=textquery&fields=formatted_address,name,geometry");
-            googleURL.append("&locationbias=circle:" + ProximityRadius + "@" + latitude + "," + longtitude);
+            StringBuilder googleURL = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json"
+                    + "?location=" + latitude + "," + longtitude
+                    + "&radius="+ProximityRadius+"&placetypes="+nearbyPlace +"&keyword="+nearbyPlace);
+       // googleURL.append("input=" + nearbyPlace + "&inputtype=textquery&fields=formatted_address,name,geometry");
+        //    googleURL.append("&locationbias=circle:" + ProximityRadius + "@" + latitude + "," + longtitude);
             googleURL.append("&key=" + "AIzaSyB35M73rZiL-jWGUGpGZOSHtIeyugTxmuE");
 
             Log.d("MapsActivity", "URL: " + googleURL.toString());
@@ -248,7 +249,11 @@ public class MapsActivity extends AppCompatActivity
     public void onLocationChanged(@NonNull Location location) {
         latitude = location.getLatitude();
         longtitude = location.getLongitude();
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longtitude), 15);
+        map.animateCamera(cameraUpdate);
 
     }
+
+
 }
 
