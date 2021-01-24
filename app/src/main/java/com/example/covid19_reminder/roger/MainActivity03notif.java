@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.example.covid19_reminder.R;
+import com.example.covid19_reminder.aymen.TimerActivity2;
 
 public class MainActivity03notif extends AppCompatActivity {
 
@@ -24,7 +25,7 @@ public class MainActivity03notif extends AppCompatActivity {
         btn5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent otherActivity2 = new Intent(getApplicationContext(), MainActivity02.class);
+                Intent otherActivity2 = new Intent(getApplicationContext(), TimerActivity2.class);
                 startActivity(otherActivity2);
                 finish();
             }
@@ -34,6 +35,9 @@ public class MainActivity03notif extends AppCompatActivity {
         btn4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent otherActivity2 = new Intent(getApplicationContext(), TimerActivity2.class);
+                startActivity(otherActivity2);
+                otherActivity2.putExtra("remind", true);
                 finish();
             }
         });

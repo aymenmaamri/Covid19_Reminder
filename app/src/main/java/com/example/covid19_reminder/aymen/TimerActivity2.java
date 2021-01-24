@@ -49,19 +49,35 @@ public class TimerActivity2 extends AppCompatActivity {
     private EditText mEditTextInput;
     private Button mButtonSet;
 
-    private long timeInSeconds = 14400;
+    private long timeInSeconds = 10;
     private long timeLeft;
     private boolean mTimerRunning = false;
     private boolean mTimerPaused = false;
-
+    private boolean enableNotifications;
+    private boolean enableVibration;
 
     public List<String> wears = new ArrayList<String>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.timer);
+
+        SharedPreferences sharedPref = getSharedPreferences("Settings", Context.MODE_PRIVATE);
+        enableNotifications = sharedPref.getBoolean("enableNotifications",false);
+        enableVibration = sharedPref.getBoolean("enableVibration",false);
+        timeInSeconds = sharedPref.getInt("timeToNotify",0);
+
+        Bundle bundle = getIntent().getExtras();
+        if(bundle!=null)
+        {
+            if(bundle.getBoolean("remind")){
+                timeInSeconds = 1800;
+                startTimer();
+            }
+        }
 
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.FOREGROUND_SERVICE},
                 PackageManager.PERMISSION_GRANTED);
@@ -80,7 +96,7 @@ public class TimerActivity2 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(!mTimerRunning){
-                    startTimer(v);
+                    startTimer();
                     mTimerRunning = true;
                 } else {
                     pauseTimer();
@@ -114,14 +130,14 @@ public class TimerActivity2 extends AppCompatActivity {
         BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                timeLeft = intent.getLongExtra("TimeRemaining", 0);
+                timeLeft = intent.getLongExtra("TimeRemaining", 0)+1;
                 formatTime(timeLeft);
             }
         };
         registerReceiver(broadcastReceiver, intentFilter);
     }
 
-    private void startTimer(View view){
+    private void startTimer(){
         Intent intentService = new Intent(this, TimerService.class);
         if (timeLeft > 0 && !mTimerRunning){
             intentService.putExtra("TimeValue", timeLeft);
@@ -130,6 +146,8 @@ public class TimerActivity2 extends AppCompatActivity {
             intentService.putExtra("TimeValue", timeInSeconds);
             startService(intentService);
         }
+        intentService.putExtra("enableNotifications",this.enableNotifications);
+        intentService.putExtra("enableVibration",this.enableVibration);
         mButtonStartPause.setImageResource(R.drawable.ic_baseline_pause_circle_outline_24);
         mEditTextInput.setEnabled(false);
         mButtonSet.setEnabled(false);
@@ -148,13 +166,12 @@ public class TimerActivity2 extends AppCompatActivity {
 
     private void stopTimer(){
         stopService(new Intent(this, TimerService.class));
-        mTextViewCountDown.setText("04.00.00");
+        formatTime(timeInSeconds);
         mButtonStartPause.setImageResource(R.drawable.ic_baseline_play_circle_outline_24);
         mEditTextInput.setEnabled(true);
         mButtonSet.setEnabled(true);
         saveWear();
         updateWears();
-        timeInSeconds = 14400;
         timeLeft = 0;
         mTimerRunning = false;
         mTimerPaused = false;
@@ -233,6 +250,7 @@ public class TimerActivity2 extends AppCompatActivity {
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
+
 
     @Override
     protected void onStop() {

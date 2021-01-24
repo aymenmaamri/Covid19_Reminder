@@ -29,7 +29,6 @@ import androidx.core.content.ContextCompat;
 
 import com.example.covid19_reminder.R;
 import com.example.covid19_reminder.aymen.SettingsActivity;
-import com.example.covid19_reminder.aymen.TimerActivity;
 import com.example.covid19_reminder.aymen.TimerActivity2;
 import com.example.covid19_reminder.roger.MainActivity01;
 import com.google.android.gms.common.api.ResolvableApiException;
@@ -55,7 +54,7 @@ import java.util.List;
 
 public class Main2Activity extends AppCompatActivity {
 
-    public static List<UserAddress> userAddresses = new ArrayList<UserAddress>();
+    //public static List<UserAddress> userAddresses = new ArrayList<UserAddress>();
 
     private static final String CHANNEL_1_ID = "movement_notifications";
     private static final String CHANNEL_2_ID = "timer_notifications";
@@ -356,6 +355,7 @@ public class Main2Activity extends AppCompatActivity {
             return;
         }
         Log.d(TAG, "addGeofence: client called");
+
         geofencingClient.addGeofences(geofencingRequest, pendingIntent).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
@@ -404,17 +404,9 @@ public class Main2Activity extends AppCompatActivity {
         Intent intent = new Intent(this, Main2Activity.class);
         startActivity(intent);
     }
+
     public void btn3(View view) {
         Intent intent = new Intent(this, MainActivity01.class);
-        startActivity(intent);
-    }
-    public void btn4(View view) {
-        Intent intent = new Intent(this, MainActivity01.class);
-        startActivity(intent);
-    }
-
-    public void btn5(View view) {
-        Intent intent = new Intent(this, MapsActivity.class);
         startActivity(intent);
     }
 
