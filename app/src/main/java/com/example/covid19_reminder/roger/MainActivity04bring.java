@@ -25,8 +25,6 @@ public class MainActivity04bring extends AppCompatActivity {
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent otherActivity2 = new Intent(getApplicationContext(), TimerActivity2.class);
-                startActivity(otherActivity2);
                 finish();
             }
         });

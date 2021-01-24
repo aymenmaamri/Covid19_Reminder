@@ -53,6 +53,7 @@ public class TimerActivity2 extends AppCompatActivity {
     private long timeLeft;
     private boolean mTimerRunning = false;
     private boolean mTimerPaused = false;
+    private boolean remindLater = false;
 
     public List<String> wears = new ArrayList<String>();
 
@@ -60,20 +61,10 @@ public class TimerActivity2 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.timer);
-
         SharedPreferences sharedPref = getSharedPreferences("Settings", Context.MODE_PRIVATE);
-        timeInSeconds = sharedPref.getInt("timeToNotify",0);
-
-        Bundle bundle = getIntent().getExtras();
-        if(bundle!=null)
-        {
-            if(bundle.getBoolean("remind")){
-                timeInSeconds = 1800;
-                startTimer();
-            }
-        }
+        //TODO: Change time to hours (*3600)
+        timeInSeconds = sharedPref.getInt("timeToNotify",3) + 1;
 
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.FOREGROUND_SERVICE},
                 PackageManager.PERMISSION_GRANTED);
@@ -142,7 +133,11 @@ public class TimerActivity2 extends AppCompatActivity {
         if (timeLeft > 0 && !mTimerRunning){
             intentService.putExtra("TimeValue", timeLeft);
             startService(intentService);
-        } else {
+        } else if(remindLater){
+            remindLater = false;
+            intentService.putExtra("TimeValue", 1800);
+            startService(intentService);
+        }else {
             intentService.putExtra("TimeValue", timeInSeconds);
             startService(intentService);
         }
@@ -260,8 +255,8 @@ public class TimerActivity2 extends AppCompatActivity {
         String json = gson.toJson(wears);
         editor.putString("save", json);
         editor.putBoolean("timerRunning", mTimerRunning);
-            editor.putLong("timeLeft", timeLeft);
-            editor.putBoolean("isTimerPaused", mTimerPaused);
+        editor.putLong("timeLeft", timeLeft);
+        editor.putBoolean("isTimerPaused", mTimerPaused);
 
         editor.apply();
     }
@@ -271,13 +266,20 @@ public class TimerActivity2 extends AppCompatActivity {
         super.onStart();
         SharedPreferences preferences = getSharedPreferences("prefs", MODE_PRIVATE);
         boolean timePaused = preferences.getBoolean("isTimerPaused", false);
+        mTimerRunning = preferences.getBoolean("timerRunning", false);
+        remindLater = preferences.getBoolean("remindLater", false);
         if (timePaused) {
             timeLeft = preferences.getLong("timeLeft", 0);
             formatTime(timeLeft);
-            mTimerRunning = preferences.getBoolean("timerRunning", false);
             mButtonStartPause.setImageResource(R.drawable.ic_baseline_play_circle_outline_24);
+        }else if(!mTimerRunning){
+            formatTime(timeInSeconds);
+            Log.d(TAG, "Test OK");
+            mButtonStartPause.setImageResource(R.drawable.ic_baseline_play_circle_outline_24);
+            mTimerPaused = false;
         }else{
             Log.d(TAG, "Test OK");
+            formatTime(timeInSeconds);
             mButtonStartPause.setImageResource(R.drawable.ic_baseline_pause_circle_outline_24);
             mTimerRunning = true;
             mTimerPaused = false;
@@ -291,6 +293,14 @@ public class TimerActivity2 extends AppCompatActivity {
             updateWears();
         }
 
+        if(remindLater){
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putBoolean("remindLater", false);
+            editor.apply();
+            timeLeft = 1800;
+            formatTime(timeLeft);
+            startTimer();
+        }
 
     }
 }

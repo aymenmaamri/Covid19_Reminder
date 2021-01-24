@@ -2,14 +2,13 @@ package com.example.covid19_reminder.roger;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 
 import com.example.covid19_reminder.R;
-import com.example.covid19_reminder.aymen.TimerActivity2;
 
 public class MainActivity03notif extends AppCompatActivity {
 
@@ -25,14 +24,21 @@ public class MainActivity03notif extends AppCompatActivity {
         btn5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SharedPreferences sharedPref = getSharedPreferences("prefs", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putBoolean("remindLater", false);
                 finish();
             }
         });
 
-        this.btn4 = (Button) findViewById(R.id.btn4);
+        this.btn4 = (Button) findViewById(R.id.remindMe);
         btn4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SharedPreferences sharedPref = getSharedPreferences("prefs", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putBoolean("remindLater", true);
+                editor.apply();
                 finish();
             }
         });

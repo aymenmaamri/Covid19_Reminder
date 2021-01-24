@@ -36,6 +36,7 @@ public class PlacesToNotify extends AppCompatActivity {
                 SharedPreferences sharedPref = getSharedPreferences("Settings", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putBoolean("enableTrainStations", enableTrainStations);
+                editor.apply();
             }
         });
 
@@ -48,6 +49,7 @@ public class PlacesToNotify extends AppCompatActivity {
                 SharedPreferences sharedPref = getSharedPreferences("Settings", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putBoolean("enableSupermarkets", enableSupermarkets);
+                editor.apply();
             }
         });
 
@@ -60,6 +62,7 @@ public class PlacesToNotify extends AppCompatActivity {
                 SharedPreferences sharedPref = getSharedPreferences("Settings", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putBoolean("enableCityCenter", enableCityCenter);
+                editor.apply();
             }
         });
 

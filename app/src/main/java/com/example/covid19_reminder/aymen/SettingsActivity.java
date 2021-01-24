@@ -48,18 +48,11 @@ public class SettingsActivity extends AppCompatActivity{
     private FusedLocationProviderClient fusedLocationProviderClient;
     TextView user_location;
 
-    
-
-
-
     public static boolean enableNotifications = false;
     public static boolean enableVibration = false;
     public static String homeAddress = "";
     public static int timeToNotify = 0;
     public static int distanceToNotify = 0;
-
-
-
 
 
 
@@ -100,6 +93,7 @@ public class SettingsActivity extends AppCompatActivity{
                 SharedPreferences sharedPref = getSharedPreferences("Settings", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putBoolean("enableNotifications", enableNotifications);
+                editor.apply();
 
             }
         });
@@ -114,6 +108,7 @@ public class SettingsActivity extends AppCompatActivity{
                 SharedPreferences sharedPref = getSharedPreferences("Settings", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putBoolean("enableVibration", enableVibration);
+                editor.apply();
             }
         });
 
@@ -127,6 +122,7 @@ public class SettingsActivity extends AppCompatActivity{
                 SharedPreferences sharedPref = getSharedPreferences("Settings", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putInt("timeToNotify",timeToNotify);
+                editor.apply();
             }
 
             @Override
@@ -145,6 +141,7 @@ public class SettingsActivity extends AppCompatActivity{
                 SharedPreferences sharedPref = getSharedPreferences("Settings", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putInt("distanceToNotify",distanceToNotify);
+                editor.apply();
             }
 
             @Override
@@ -185,6 +182,11 @@ public class SettingsActivity extends AppCompatActivity{
                             List<Address> addresses = geocoder.getFromLocation(
                                     location.getLatitude(), location.getLongitude(), 1);
                             user_location.setText(addresses.get(0).getAddressLine(0));
+                            homeAddress = addresses.get(0).getAddressLine(0);
+                            SharedPreferences sharedPref = getSharedPreferences("Settings", Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPref.edit();
+                            editor.putString("homeAddress",homeAddress);
+                            editor.apply();
                         } catch (IOException e){
                             e.printStackTrace();
                         }
@@ -197,10 +199,6 @@ public class SettingsActivity extends AppCompatActivity{
             ActivityCompat.requestPermissions(SettingsActivity.this
             , new  String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
         }
-
-        SharedPreferences sharedPref = getSharedPreferences("Settings", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString("homeAddress",homeAddress);
 
     }
 //    public static boolean enableNotifications = false;

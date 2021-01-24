@@ -43,9 +43,9 @@ public class TimerService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-
-        timeRemaining = new long[]{intent.getLongExtra("TimeValue", 14400)};
         SharedPreferences sharedPref = getSharedPreferences("Settings", Context.MODE_PRIVATE);
+        long defaulttime = (sharedPref.getInt("timeToNotify",3) + 1 )*3600;
+        timeRemaining = new long[]{intent.getLongExtra("TimeValue", defaulttime)};
         enableNotifications = sharedPref.getBoolean("enableNotifications", true);
         enableVibration = sharedPref.getBoolean("enableVibration", true);
 
@@ -59,11 +59,11 @@ public class TimerService extends Service {
                     timeRemaining[0]--;
                     if (timeRemaining[0] <= 0) {
                         timer.cancel();
+                        intentLocale.putExtra("StopTimer", true);
+                        sendBroadcast(intentLocale);
                         if(enableNotifications){
                             createNotif();
                         }
-                        intentLocale.putExtra("StopTimer", true);
-                        sendBroadcast(intentLocale);
                     }
                     intentLocale.putExtra("TimeRemaining", timeRemaining[0]);
                     sendBroadcast(intentLocale);

@@ -17,7 +17,6 @@
         android:layout_marginTop="40dp"
         android:layout_marginEnd="20dp"
         android:layout_toStartOf="@+id/start_btn"
-        android:text="04.00.00"
         android:textAlignment="center"
         android:textColor="@android:color/white"
         android:textSize="40sp"
