@@ -1,77 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <View
-        android:id="@+id/union"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:background="@drawable/header"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+    android:layout_height="match_parent"
+    android:background="@color/background_color">
 
     <Button
         android:id="@+id/btn3"
         android:layout_width="300dp"
         android:layout_height="60dp"
-        android:layout_marginBottom="35dp"
-        android:background="@drawable/custom_btn2"
-        android:onClick="btn3"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/button"
+        android:onClick="btn2"
         android:text="@string/okay"
         android:textColor="#ffffff"
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:theme="@android:style/ThemeOverlay.Material.Dark"
-        tools:targetApi="m" />
-
-
+        app:layout_constraintStart_toStartOf="parent" />
 
     <View
         android:id="@+id/view"
-        android:layout_width="387dp"
-        android:layout_height="292dp"
+        android:layout_width="381dp"
+        android:layout_height="285dp"
         android:background="@drawable/custom_view"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btn4"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.333"
+        app:layout_constraintHorizontal_bias="0.533"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.408" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.21" />
+
     <TextView
         android:id="@+id/textView"
-        android:layout_width="359dp"
-        android:layout_height="280dp"
+        android:layout_width="299dp"
+        android:layout_height="176dp"
+        android:layout_marginTop="32dp"
+        android:fontFamily="monospace"
         android:text="@string/please_put_your_mask_on"
         android:textColor="#000000"
-        android:fontFamily="monospace"
-        android:textSize="50sp"
-        app:layout_constraintBottom_toBottomOf="@+id/view"
+        android:textSize="20sp"
+        android:typeface="monospace"
+        app:layout_constraintBottom_toTopOf="@+id/btn4"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.307"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toTopOf="@+id/view"
+        app:layout_constraintVertical_bias="0.194" />
 
     <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="100sp"
-        android:layout_height="100sp"
+        android:id="@+id/imageView"
+        android:layout_width="115dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="16dp"
+        android:background="#00BF6E6E"
         android:contentDescription="@string/todo"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/union"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/stat_notify_error"
         app:tint="@color/button" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

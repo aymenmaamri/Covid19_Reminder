@@ -51,8 +51,8 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="354dp"
-        android:layout_height="189dp"
+        android:layout_width="306dp"
+        android:layout_height="235dp"
         android:fontFamily="monospace"
         android:text="@string/you_have_worn_the_mask_for_4_hours_please_change_it"
         android:textColor="#000000"

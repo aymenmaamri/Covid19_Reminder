@@ -5,7 +5,6 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
@@ -18,7 +17,6 @@ import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,7 +28,6 @@ import androidx.core.content.ContextCompat;
 import com.example.covid19_reminder.R;
 import com.example.covid19_reminder.aymen.SettingsActivity;
 import com.example.covid19_reminder.aymen.TimerActivity2;
-import com.example.covid19_reminder.roger.MainActivity01;
 import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.Geofence;
@@ -49,7 +46,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Main2Activity extends AppCompatActivity {
@@ -373,9 +369,6 @@ public class Main2Activity extends AppCompatActivity {
 
 
 
-
-
-
     public void timer(View view) {
         Intent intent = new Intent(this, TimerActivity2.class);
         startActivity(intent);
@@ -404,14 +397,6 @@ public class Main2Activity extends AppCompatActivity {
         Intent intent = new Intent(this, Main2Activity.class);
         startActivity(intent);
     }
-
-    public void btn3(View view) {
-        Intent intent = new Intent(this, MainActivity01.class);
-        startActivity(intent);
-    }
-
-
-
 
 
 }

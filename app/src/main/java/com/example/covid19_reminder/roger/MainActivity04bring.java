@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.covid19_reminder.R;
+import com.example.covid19_reminder.aymen.TimerActivity2;
 import com.example.covid19_reminder.yichen.MapsActivity;
 
 public class MainActivity04bring extends AppCompatActivity {
@@ -24,7 +25,7 @@ public class MainActivity04bring extends AppCompatActivity {
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent otherActivity2 = new Intent(getApplicationContext(), MainActivity02.class);
+                Intent otherActivity2 = new Intent(getApplicationContext(), TimerActivity2.class);
                 startActivity(otherActivity2);
                 finish();
             }

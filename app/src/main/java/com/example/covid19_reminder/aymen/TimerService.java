@@ -1,32 +1,26 @@
 package com.example.covid19_reminder.aymen;
 
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.IBinder;
-import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.example.covid19_reminder.R;
-import com.example.covid19_reminder.roger.MainActivity02;
 import com.example.covid19_reminder.roger.MainActivity03notif;
 
 import java.util.Timer;
 import java.util.TimerTask;
-
-import static androidx.core.app.NotificationCompat.DEFAULT_SOUND;
-import static androidx.core.app.NotificationCompat.DEFAULT_VIBRATE;
 
 public class TimerService extends Service {
 
@@ -40,7 +34,6 @@ public class TimerService extends Service {
     private boolean enableVibration;
 
 
-
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -52,8 +45,9 @@ public class TimerService extends Service {
 
 
         timeRemaining = new long[]{intent.getLongExtra("TimeValue", 14400)};
-        enableNotifications = intent.getBooleanExtra("enableNotifications", true);
-        enableVibration = intent.getBooleanExtra("enableVibration", true);
+        SharedPreferences sharedPref = getSharedPreferences("Settings", Context.MODE_PRIVATE);
+        enableNotifications = sharedPref.getBoolean("enableNotifications", true);
+        enableVibration = sharedPref.getBoolean("enableVibration", true);
 
         timer.scheduleAtFixedRate(new TimerTask() {
                 @Override
@@ -68,6 +62,8 @@ public class TimerService extends Service {
                         if(enableNotifications){
                             createNotif();
                         }
+                        intentLocale.putExtra("StopTimer", true);
+                        sendBroadcast(intentLocale);
                     }
                     intentLocale.putExtra("TimeRemaining", timeRemaining[0]);
                     sendBroadcast(intentLocale);

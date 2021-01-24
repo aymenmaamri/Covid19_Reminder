@@ -97,6 +97,10 @@ public class SettingsActivity extends AppCompatActivity{
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 enableNotifications = notifications.isChecked();
+                SharedPreferences sharedPref = getSharedPreferences("Settings", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putBoolean("enableNotifications", enableNotifications);
+
             }
         });
 
@@ -107,6 +111,9 @@ public class SettingsActivity extends AppCompatActivity{
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 enableVibration = vibration.isChecked();
+                SharedPreferences sharedPref = getSharedPreferences("Settings", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putBoolean("enableVibration", enableVibration);
             }
         });
 
@@ -117,6 +124,9 @@ public class SettingsActivity extends AppCompatActivity{
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 timeToNotify = spinnerTime.getSelectedItemPosition();
+                SharedPreferences sharedPref = getSharedPreferences("Settings", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putInt("timeToNotify",timeToNotify);
             }
 
             @Override
@@ -132,6 +142,9 @@ public class SettingsActivity extends AppCompatActivity{
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 distanceToNotify = spinnerDistance.getSelectedItemPosition();
+                SharedPreferences sharedPref = getSharedPreferences("Settings", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putInt("distanceToNotify",distanceToNotify);
             }
 
             @Override
@@ -184,6 +197,10 @@ public class SettingsActivity extends AppCompatActivity{
             ActivityCompat.requestPermissions(SettingsActivity.this
             , new  String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
         }
+
+        SharedPreferences sharedPref = getSharedPreferences("Settings", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("homeAddress",homeAddress);
 
     }
 //    public static boolean enableNotifications = false;

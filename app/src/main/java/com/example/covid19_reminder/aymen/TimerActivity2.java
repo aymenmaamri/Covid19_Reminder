@@ -53,8 +53,6 @@ public class TimerActivity2 extends AppCompatActivity {
     private long timeLeft;
     private boolean mTimerRunning = false;
     private boolean mTimerPaused = false;
-    private boolean enableNotifications;
-    private boolean enableVibration;
 
     public List<String> wears = new ArrayList<String>();
 
@@ -66,8 +64,6 @@ public class TimerActivity2 extends AppCompatActivity {
         setContentView(R.layout.timer);
 
         SharedPreferences sharedPref = getSharedPreferences("Settings", Context.MODE_PRIVATE);
-        enableNotifications = sharedPref.getBoolean("enableNotifications",false);
-        enableVibration = sharedPref.getBoolean("enableVibration",false);
         timeInSeconds = sharedPref.getInt("timeToNotify",0);
 
         Bundle bundle = getIntent().getExtras();
@@ -132,6 +128,10 @@ public class TimerActivity2 extends AppCompatActivity {
             public void onReceive(Context context, Intent intent) {
                 timeLeft = intent.getLongExtra("TimeRemaining", 0)+1;
                 formatTime(timeLeft);
+                if(intent.getBooleanExtra("StopTimer",false)){
+                    stopTimer();
+                };
+
             }
         };
         registerReceiver(broadcastReceiver, intentFilter);
@@ -146,8 +146,6 @@ public class TimerActivity2 extends AppCompatActivity {
             intentService.putExtra("TimeValue", timeInSeconds);
             startService(intentService);
         }
-        intentService.putExtra("enableNotifications",this.enableNotifications);
-        intentService.putExtra("enableVibration",this.enableVibration);
         mButtonStartPause.setImageResource(R.drawable.ic_baseline_pause_circle_outline_24);
         mEditTextInput.setEnabled(false);
         mButtonSet.setEnabled(false);
@@ -278,7 +276,7 @@ public class TimerActivity2 extends AppCompatActivity {
             formatTime(timeLeft);
             mTimerRunning = preferences.getBoolean("timerRunning", false);
             mButtonStartPause.setImageResource(R.drawable.ic_baseline_play_circle_outline_24);
-        } else {
+        }else{
             Log.d(TAG, "Test OK");
             mButtonStartPause.setImageResource(R.drawable.ic_baseline_pause_circle_outline_24);
             mTimerRunning = true;
