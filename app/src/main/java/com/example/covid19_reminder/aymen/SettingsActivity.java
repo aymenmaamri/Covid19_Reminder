@@ -201,11 +201,6 @@ public class SettingsActivity extends AppCompatActivity{
         }
 
     }
-//    public static boolean enableNotifications = false;
-//    public static boolean enableVibration = false;
-//    public static String homeAddress = "";
-//    public static int timeToNotify = 0;
-//    public static int distanceToNotify = 0;
 
     @Override
     protected void onStop() {

@@ -110,20 +110,35 @@
     <TextView
         android:id="@+id/wears_view"
         android:layout_width="wrap_content"
-        android:layout_height="243dp"
+        android:layout_height="295dp"
         android:layout_below="@+id/textView2"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
         android:layout_marginStart="30dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="40dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="0dp"
         android:background="@drawable/text_box"
+        android:scrollbars="vertical"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textColor="#F4EFEF"
         android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/clear_wears"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/wears_view"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="55dp"
+        android:onClick="clearWears"
+        android:text="Clear all"
+        android:textAlignment="textEnd"
+        android:textColor="@color/theme"
+        android:textSize="14sp"
+        android:typeface="monospace" />
 
 
 

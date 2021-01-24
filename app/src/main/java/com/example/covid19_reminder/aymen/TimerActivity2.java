@@ -62,16 +62,14 @@ public class TimerActivity2 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.timer);
-        SharedPreferences sharedPref = getSharedPreferences("Settings", Context.MODE_PRIVATE);
-        //TODO: Change time to hours (*3600)
-        timeInSeconds = sharedPref.getInt("timeToNotify",3) + 1;
 
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.FOREGROUND_SERVICE},
                 PackageManager.PERMISSION_GRANTED);
 
+        updateTimeSetting();
         mTextViewCountDown = findViewById(R.id.text_view_timer);
         mWearsView = findViewById(R.id.wears_view);
-       // mWearsView.setMovementMethod(new ScrollingMovementMethod());
+        mWearsView.setMovementMethod(new ScrollingMovementMethod());
         mButtonStartPause = findViewById(R.id.start_btn);
         mButtonReset = findViewById(R.id.reset_btn);
 
@@ -128,14 +126,21 @@ public class TimerActivity2 extends AppCompatActivity {
         registerReceiver(broadcastReceiver, intentFilter);
     }
 
+    private void updateTimeSetting(){
+        SharedPreferences sharedPref = getSharedPreferences("Settings", Context.MODE_PRIVATE);
+        //TODO: Change time to hours (*3600)
+        timeInSeconds = sharedPref.getInt("timeToNotify",3) + 1;
+    }
+
     private void startTimer(){
         Intent intentService = new Intent(this, TimerService.class);
-        if (timeLeft > 0 && !mTimerRunning){
-            intentService.putExtra("TimeValue", timeLeft);
-            startService(intentService);
-        } else if(remindLater){
+        if(remindLater){
             remindLater = false;
-            intentService.putExtra("TimeValue", 1800);
+            timeInSeconds = 1800;
+            intentService.putExtra("TimeValue", timeInSeconds);
+            startService(intentService);
+        } else if (timeLeft > 0 && !mTimerRunning){
+            intentService.putExtra("TimeValue", timeLeft);
             startService(intentService);
         }else {
             intentService.putExtra("TimeValue", timeInSeconds);
@@ -159,15 +164,18 @@ public class TimerActivity2 extends AppCompatActivity {
 
     private void stopTimer(){
         stopService(new Intent(this, TimerService.class));
-        formatTime(timeInSeconds);
         mButtonStartPause.setImageResource(R.drawable.ic_baseline_play_circle_outline_24);
         mEditTextInput.setEnabled(true);
         mButtonSet.setEnabled(true);
-        saveWear();
-        updateWears();
+        if(mTimerRunning){
+            saveWear();
+            updateWears();
+        }
         timeLeft = 0;
         mTimerRunning = false;
         mTimerPaused = false;
+        updateTimeSetting();
+        formatTime(timeInSeconds);
     }
 
     private long getMillis() {
@@ -236,6 +244,11 @@ public class TimerActivity2 extends AppCompatActivity {
         mWearsView.setText(text);
     }
 
+    public void clearWears(View view){
+        wears.clear();
+        mWearsView.setText("");
+    }
+
     private void closeKeyboard() {
         View view = this.getCurrentFocus();
         if(view != null){
@@ -248,7 +261,6 @@ public class TimerActivity2 extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-
         SharedPreferences preferences = getSharedPreferences("prefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         Gson gson = new Gson();
