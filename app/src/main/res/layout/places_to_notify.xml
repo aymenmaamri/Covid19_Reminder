@@ -19,70 +19,45 @@
         android:layout_marginTop="60dp"
         android:layout_marginLeft="30dp"/>
 
-    <Switch
-        android:id="@+id/supermarketsSwitch"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="30dp"
-        android:text="Supermarkets"
-        android:textSize="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/trainStationsSwitch" />
-
-    <Switch
-        android:id="@+id/cityCenterSwitch"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="30dp"
-        android:text="City center"
-        android:textSize="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/supermarketsSwitch" />
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginTop="30dp"
         android:clickable="true"
         android:onClick="addAddress"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cityCenterSwitch"
+        app:layout_constraintTop_toBottomOf="@+id/trainStationsSwitch"
         app:srcCompat="@android:drawable/ic_input_add" />
 
     <TextView
         android:id="@+id/othersText"
         android:layout_width="116dp"
         android:layout_height="50dp"
-        android:layout_marginTop="48dp"
-        android:layout_marginEnd="180dp"
-        android:text="Others"
-        android:textSize="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="30dp"
         android:gravity="center_vertical"
+        android:text="Others"
         android:textColor="@color/black"
-        app:layout_constraintEnd_toStartOf="@+id/floatingActionButton3"
-        app:layout_constraintTop_toBottomOf="@+id/cityCenterSwitch" />
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/trainStationsSwitch" />
 
     <ListView
         android:id="@+id/addresslist"
         android:layout_width="340dp"
-        android:layout_height="263dp"
+        android:layout_height="350dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
         android:background="@drawable/text_box"
+        android:scrollbars="vertical"
         android:textColor="#F4EFEF"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/othersText"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/othersText" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

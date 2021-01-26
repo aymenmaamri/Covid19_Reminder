@@ -5,8 +5,10 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -40,13 +42,20 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResponse;
 import com.google.android.gms.location.SettingsClient;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Main2Activity extends AppCompatActivity {
 
@@ -61,6 +70,7 @@ public class Main2Activity extends AppCompatActivity {
 
     private static final String TAG = "Main2Activity";
     int LOCATION_REQUEST_CODE = 10001;
+    private double curLat,curLng, initialLat, initialLng;
 
     private  NotificationManagerCompat notificationManager;
 
@@ -68,30 +78,30 @@ public class Main2Activity extends AppCompatActivity {
     private FusedLocationProviderClient fusedLocationProviderClient;
     private LocationRequest locationRequest;
     public Button timer;
+    private boolean enableSearch;
+    Set<String> trainStations = new HashSet<String>();
+    Set<String> addedPlaces = new HashSet<String>();
+    ArrayList<Address> stationAddress = new ArrayList<Address>();
+    ArrayList<Address> addedAddress = new ArrayList<Address>();
+    private boolean enableNotifications;
+    private boolean enableVibration;
+    private String homeAddress;
+    private int distanceToNotify;
+    private boolean placeFirstVisit = true;
 
 
-
-
-
-    public void getAddresses(){
-        try {
-            List<Address> addresses = geocoder.getFromLocationName("bahnhof", 10);
-            for(Address address : addresses) {
-                Log.d(TAG, "List: " + address.toString());
-            }
-
-        } catch (IOException e) {
-            Log.d(TAG, "ListFailure: ");
-            e.printStackTrace();
-        }
-    }
-
-
-
-
-
-
-
+//    public void getAddresses(){
+//        try {
+//            List<Address> addresses = geocoder.getFromLocationName("bahnhof", 10);
+//            for(Address address : addresses) {
+//                Log.d(TAG, "List: " + address.toString());
+//            }
+//
+//        } catch (IOException e) {
+//            Log.d(TAG, "ListFailure: ");
+//            e.printStackTrace();
+//        }
+//    }
 
     LocationCallback locationCallback = new LocationCallback() {
         @Override
@@ -104,24 +114,51 @@ public class Main2Activity extends AppCompatActivity {
                 try {
                     if (location != null) {
                         extractedAddress = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1).get(0);
+                        curLat = location.getLatitude();
+                        curLng = location.getLongitude();
+                        setStations();
+                        SharedPreferences sharedPref = getSharedPreferences("Stations", Context.MODE_PRIVATE);
+                        double placeLat = Double.longBitsToDouble(sharedPref.getLong("placeLat",Double.doubleToLongBits(curLat)));
+                        double placeLng = Double.longBitsToDouble(sharedPref.getLong("placeLng",Double.doubleToLongBits(curLat)));
+                        if(getDistance(curLat,curLng,placeLat,placeLng)>=1000){
+                            placeFirstVisit = true;
+                        }
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                if (extractedAddress != null && extractedAddress.getThoroughfare() != null && addressToNotify != null) {
-                    Log.d(TAG, "onAddressExtraction: " + extractedAddress.getThoroughfare());
-                    Log.d(TAG, "onAddressExtraction2: " + addressToNotify.getAddressLine(0));
-                    if (extractedAddress.getThoroughfare().equals(addressToNotify.getThoroughfare())) {
-                        Log.d(TAG, "SUCCESS: PASSED");
-                        //notify user
-                        pushNotification();
-                    }
+
+                for(Address a :stationAddress){
+                    checkPlace(extractedAddress,a);
                 }
+                for(Address a :addedAddress){
+                    checkPlace(extractedAddress,a);
+                }
+
 
             }
 
         }
     };
+
+    public void checkPlace(Address extractedAddress, Address a){
+        if (placeFirstVisit && enableNotifications && extractedAddress != null && extractedAddress.getThoroughfare() != null && a != null) {
+            //Log.d(TAG, "onAddressExtraction: " + extractedAddress.getThoroughfare());
+            Log.d(TAG, "onAddressExtraction2: " + a.getAddressLine(0));
+            if (extractedAddress.getThoroughfare().equals(a.getThoroughfare())) {
+                //Log.d(TAG, "SUCCESS: PASSED");
+                //mark the current place location
+                SharedPreferences sharedPref = getSharedPreferences("Stations", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putLong("placeLat", Double.doubleToLongBits(curLat));
+                editor.putLong("placeLng", Double.doubleToLongBits(curLng));
+                editor.apply();
+                //notify user
+                pushNotification();
+                placeFirstVisit = false;
+            }
+        }
+    }
 
 
     @Override
@@ -130,6 +167,20 @@ public class Main2Activity extends AppCompatActivity {
         setContentView(R.layout.activity_main2);
 
         createNotificationChannels();
+
+        SharedPreferences settings = getSharedPreferences("Settings", Context.MODE_PRIVATE);
+        enableNotifications = settings.getBoolean("enableNotifications",false);
+        enableVibration = settings.getBoolean("enableVibration",false);
+        homeAddress = settings.getString("homeAddress","");
+        distanceToNotify = (settings.getInt("distanceToNotify",0) +1)*10;
+        addedPlaces = settings.getStringSet("addressesToNotify",new HashSet<String>());
+        
+        SharedPreferences sharedPref = getSharedPreferences("Stations", Context.MODE_PRIVATE);
+        enableSearch = sharedPref.getBoolean("enableSearch",true);
+        initialLat = Double.longBitsToDouble(sharedPref.getLong("initialLat", Double.doubleToLongBits(0.0)));
+        initialLng = Double.longBitsToDouble(sharedPref.getLong("initialLng", Double.doubleToLongBits(0.0)));
+        trainStations = sharedPref.getStringSet("StationAddress",trainStations);
+        setStations();
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         geocoder = new Geocoder(this);
@@ -144,24 +195,17 @@ public class Main2Activity extends AppCompatActivity {
         geofencingClient = LocationServices.getGeofencingClient(this);
         geofenceHelper = new GeofenceHelper(this);
 
-
-        try {
-            addressToNotify = geocoder.getFromLocationName("Lodyweg 1 C", 1).get(0);
-            Log.d(TAG, "onCreateAddress: " + addressToNotify.toString());
-
-        } catch (IOException e) {
-            Log.d(TAG, "onGetFailure: ");
-            e.printStackTrace();
+        if(trainStations.size()>0){
+            stationAddress = stringSetToAddresses(trainStations);
         }
 
-        if (addressToNotify != null) {
-            //LatLng latLng = new LatLng(addressToNotify.getLongitude(), addressToNotify.getLatitude());
-            LatLng latLng = new LatLng(-34, 151);
-            Log.d(TAG, "onLatLng: " + latLng.latitude + " , " + latLng.longitude);
-            addGeofence(latLng, 50);
+        if(addedPlaces.size()>0){
+            addedAddress = stringSetToAddresses(addedPlaces);
         }
 
-        getAddresses();
+
+
+        //getAddresses();
         //pushNotification();
 
     }
@@ -176,12 +220,57 @@ public class Main2Activity extends AppCompatActivity {
         } else {
             askLocationPermission();
         }
+        SharedPreferences settings = getSharedPreferences("Settings", Context.MODE_PRIVATE);
+        enableNotifications = settings.getBoolean("enableNotifications",false);
+        enableVibration = settings.getBoolean("enableVibration",false);
+        homeAddress = settings.getString("homeAddress","");
+        distanceToNotify = (settings.getInt("distanceToNotify",0) +1)*10;
+        addedPlaces = settings.getStringSet("addressesToNotify",new HashSet<String>());
+        Log.d(TAG, "update, add: " + addedPlaces);
+        if(enableNotifications){
+            Log.d(TAG, "enableNotifications");
+        }
+        if(addedPlaces.size()>0){
+            addedAddress = stringSetToAddresses(addedPlaces);
+        }
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         stopLocationUpdates();
+    }
+
+    private ArrayList<Address> stringSetToAddresses(Set<String> set){
+        ArrayList<Address> addresses = new ArrayList<Address>();
+        List<Address> geoResult = new ArrayList<Address>();
+
+        Address temp = null;
+        for (String s: set) {
+            //Log.d(TAG, "onCreateAddress: " + s);
+            try {
+                //only full address accepted here
+                geoResult = geocoder.getFromLocationName(s, 5);
+                if(geoResult.size()!=0){
+                    temp = geoResult.get(0);
+                    addresses.add(temp);
+                }else{
+                    Log.d(TAG, "onGetFailure: No location found");
+                }
+            } catch (IOException e) {
+                Log.d(TAG, "onGetFailure: ");
+                e.printStackTrace();
+            }
+
+            if (temp != null) {
+                LatLng latLng = new LatLng(-34, 151);
+               // Log.d(TAG, "onLatLng: " + latLng.latitude + " , " + latLng.longitude);
+                addGeofence(latLng, 50);
+                Log.d(TAG, "add Geofence on: " + temp.getAddressLine(0));
+            }
+        }
+
+        return addresses;
     }
 
     private void checkSettingsAndStartLocationUpdates() {
@@ -240,10 +329,10 @@ public class Main2Activity extends AppCompatActivity {
                 @Override
                 public void onSuccess(Location location) {
                     if (location != null) {
-                        Log.d(TAG, "onSuccess " + location.toString());
-                        Log.d(TAG, "onSuccess " + location.getAccuracy());
-                        Log.d(TAG, "onSuccess " + location.getLongitude());
-                        Log.d(TAG, "onSuccess: this was called from the mainActivity");
+                        //Log.d(TAG, "onSuccess " + location.toString());
+                        //Log.d(TAG, "onSuccess " + location.getAccuracy());
+                        //Log.d(TAG, "onSuccess " + location.getLongitude());
+                        //Log.d(TAG, "onSuccess: this was called from the mainActivity");
                     } else {
                         Log.d(TAG, "onSuccess: Location was null");
                     }
@@ -315,24 +404,22 @@ public class Main2Activity extends AppCompatActivity {
     }
 
     public void pushNotification(){
-        Notification notification = new NotificationCompat.Builder(this, CHANNEL_1_ID)
-                .setSmallIcon(R.drawable.ic_one)
-                .setContentTitle("test notification")
-                .setContentText("this is a notification from channel 1")
-                .setCategory(NotificationCompat.CATEGORY_ALARM)
-                .build();
-        Log.d(TAG, "NotificationBuild");
+        if(enableNotifications){
+            Notification notification = new NotificationCompat.Builder(this, CHANNEL_1_ID)
+                    .setSmallIcon(R.drawable.ic_one)
+                    .setContentTitle("Covid19 Reminder")
+                    .setContentText("Please put your mask on! You're now in the risk area.")
+                    .setCategory(NotificationCompat.CATEGORY_ALARM)
+                    .build();
+            Log.d(TAG, "NotificationBuild");
 
-        notificationManager.notify(1, notification);
+            notificationManager.notify(1, notification);
+        }
     }
 
 
-
-
-
-
     private void addGeofence(LatLng latLng, float radius) {
-        Log.d(TAG, "addGeofence: function called");
+        //Log.d(TAG, "addGeofence: function called");
         //Toast.makeText(this, "addGeofence: function called", Toast.LENGTH_SHORT).show();
         Geofence geofence = geofenceHelper.getGeoFence(geofenceID, latLng, radius, Geofence.GEOFENCE_TRANSITION_ENTER);
         GeofencingRequest geofencingRequest = geofenceHelper.getGeoFencingRequest(geofence);
@@ -350,12 +437,12 @@ public class Main2Activity extends AppCompatActivity {
             Log.d(TAG, "permission not granted");
             return;
         }
-        Log.d(TAG, "addGeofence: client called");
+        //Log.d(TAG, "addGeofence: client called");
 
         geofencingClient.addGeofences(geofencingRequest, pendingIntent).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                Log.d(TAG, "onSuccess: Geofence added...");
+                //Log.d(TAG, "onSuccess: Geofence added...");
             }
         })
                 .addOnFailureListener(new OnFailureListener() {
@@ -367,6 +454,56 @@ public class Main2Activity extends AppCompatActivity {
                 });
     }
 
+    public void setStations(){
+        SharedPreferences sharedPref = getSharedPreferences("Stations", Context.MODE_PRIVATE);
+        if(enableSearch && !(curLat==0.0&&curLng==0.0) ){
+            enableSearch = false;
+            initialLat = curLat;
+            initialLng = curLng;
+
+            Object transferData[] = new Object[2];
+            GetStationList getNearbyPlaces = new GetStationList();
+            String url = getUrl(curLat, curLng);
+
+            transferData[0] = sharedPref;
+            transferData[1] = url;
+            getNearbyPlaces.execute(transferData);
+
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putLong("initialLat", Double.doubleToLongBits(curLat));
+            editor.putLong("initialLng", Double.doubleToLongBits(curLng));
+            editor.apply();
+        }else if(getDistance(curLat,curLng,initialLat,initialLng) >= 10000){
+            enableSearch = true;
+        }
+        trainStations = sharedPref.getStringSet("StationAddress",trainStations);
+        //Log.d("MainActivity", "Station: " + trainStations.size());
+    }
+
+    public float getDistance(double lat_a, double lng_a, double lat_b, double lng_b )
+    {
+        double earthRadius = 3958.75;
+        double latDiff = Math.toRadians(lat_b-lat_a);
+        double lngDiff = Math.toRadians(lng_b-lng_a);
+        double a = Math.sin(latDiff /2) * Math.sin(latDiff /2) +
+                Math.cos(Math.toRadians(lat_a)) * Math.cos(Math.toRadians(lat_b)) *
+                        Math.sin(lngDiff /2) * Math.sin(lngDiff /2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        double distance = earthRadius * c;
+
+        int meterConversion = 1609;
+        //Log.d("MainActivity", "Distance moved: " + new Float(distance * meterConversion).floatValue());
+        return new Float(distance * meterConversion).floatValue();
+    }
+
+    private String getUrl(double latitude, double longtitude) {
+        StringBuilder googleURL = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json"
+                + "?location=" + latitude + "," + longtitude
+                + "&radius="+10000+"&placetypes=train_station");
+        googleURL.append("&key=" + "AIzaSyB35M73rZiL-jWGUGpGZOSHtIeyugTxmuE");
+        Log.d("MainActivity", "search stations URL: " + googleURL.toString());
+        return googleURL.toString();
+    }
 
 
     public void timer(View view) {

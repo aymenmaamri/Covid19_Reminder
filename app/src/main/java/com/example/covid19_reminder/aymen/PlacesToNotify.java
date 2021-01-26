@@ -66,32 +66,6 @@ public class PlacesToNotify extends AppCompatActivity {
             }
         });
 
-        Switch supermarkets = (Switch) findViewById(R.id.supermarketsSwitch);
-        supermarkets.setChecked(enableSupermarkets);
-        supermarkets.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                enableSupermarkets = supermarkets.isChecked();
-                SharedPreferences sharedPref = getSharedPreferences("Settings", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putBoolean("enableSupermarkets", enableSupermarkets);
-                editor.apply();
-            }
-        });
-
-        Switch cityCenter = (Switch) findViewById(R.id.cityCenterSwitch);
-        cityCenter.setChecked(enableCityCenter);
-        cityCenter.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                enableCityCenter = cityCenter.isChecked();
-                SharedPreferences sharedPref = getSharedPreferences("Settings", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putBoolean("enableCityCenter", enableCityCenter);
-                editor.apply();
-            }
-        });
-
     }
 
     public void updateList(){
