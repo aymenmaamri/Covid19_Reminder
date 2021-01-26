@@ -128,8 +128,7 @@ public class TimerActivity2 extends AppCompatActivity {
 
     private void updateTimeSetting(){
         SharedPreferences sharedPref = getSharedPreferences("Settings", Context.MODE_PRIVATE);
-        //TODO: Change time to hours (*3600)
-        timeInSeconds = sharedPref.getInt("timeToNotify",3) + 1;
+        timeInSeconds = (sharedPref.getInt("timeToNotify",3) + 1)*3600;
     }
 
     private void startTimer(){

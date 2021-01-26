@@ -18,7 +18,6 @@ public class GeofenceBroadcast extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         try {
-            // TODO: This method is called when the BroadcastReceiver is receiving
             // an Intent broadcast.
             Log.d(TAG, "onReceive: recieving geofence works");
             Toast.makeText(context, "Geofence triggered", Toast.LENGTH_SHORT).show();
