@@ -26,8 +26,6 @@ import java.util.Set;
 public class PlacesToNotify extends AppCompatActivity {
 
     boolean enableTrainStations;
-    boolean enableSupermarkets;
-    boolean enableCityCenter;
 
     Set<String> addressesToNotify = new HashSet<String>();
     ListView addressList;
@@ -39,8 +37,6 @@ public class PlacesToNotify extends AppCompatActivity {
 
         SharedPreferences sharedPref = getSharedPreferences("Settings", Context.MODE_PRIVATE);
         enableTrainStations = sharedPref.getBoolean("enableTrainStations",true);
-        enableSupermarkets = sharedPref.getBoolean("enableSupermarkets",true);
-        enableCityCenter = sharedPref.getBoolean("enableCityCenter",true);
         addressesToNotify = sharedPref.getStringSet("addressesToNotify",new HashSet<String>());
 
         addressList = (ListView) findViewById(R.id.addresslist);
@@ -134,8 +130,6 @@ public class PlacesToNotify extends AppCompatActivity {
         SharedPreferences sharedPref = getSharedPreferences("Settings", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putBoolean("enableTrainStations", enableTrainStations);
-        editor.putBoolean("enableSupermarkets", enableSupermarkets);
-        editor.putBoolean("enableCityCenter", enableCityCenter);
         editor.putStringSet("addressesToNotify", addressesToNotify);
         editor.apply();
         super.onStop();

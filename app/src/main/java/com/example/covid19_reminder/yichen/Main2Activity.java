@@ -86,8 +86,11 @@ public class Main2Activity extends AppCompatActivity {
     private boolean enableNotifications;
     private boolean enableVibration;
     private String homeAddress;
+    private Address home;
+    private boolean atHome;
     private int distanceToNotify;
     private boolean placeFirstVisit = true;
+    private boolean enableTrainStations;
 
 
 //    public void getAddresses(){
@@ -123,17 +126,33 @@ public class Main2Activity extends AppCompatActivity {
                         if(getDistance(curLat,curLng,placeLat,placeLng)>=1000){
                             placeFirstVisit = true;
                         }
+
+                        if(getDistance(curLat,curLng,home.getLatitude(),home.getLongitude())<distanceToNotify){
+                            atHome = true;
+                            Log.d(TAG, "Get home");
+
+                        }
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
-                for(Address a :stationAddress){
-                    checkPlace(extractedAddress,a);
+                if(atHome && enableNotifications 
+                        && getDistance(curLat,curLng,home.getLatitude(),home.getLongitude())>=distanceToNotify){
+                    pushNotification(2);
+                    atHome = false;
+                    Log.d(TAG, "Away from home, distance:"+getDistance(curLat,curLng,home.getLatitude(),home.getLongitude()));
                 }
-                for(Address a :addedAddress){
-                    checkPlace(extractedAddress,a);
+
+                if(enableTrainStations && placeFirstVisit && enableNotifications){
+                    for(Address a :stationAddress){
+                        checkPlace(extractedAddress,a,1);
+                    }
+                    for(Address a :addedAddress){
+                        checkPlace(extractedAddress,a,1);
+                    }
                 }
+
 
 
             }
@@ -141,10 +160,11 @@ public class Main2Activity extends AppCompatActivity {
         }
     };
 
-    public void checkPlace(Address extractedAddress, Address a){
-        if (placeFirstVisit && enableNotifications && extractedAddress != null && extractedAddress.getThoroughfare() != null && a != null) {
+
+    public void checkPlace(Address extractedAddress, Address a, int mode){
+        if ( extractedAddress != null && extractedAddress.getThoroughfare() != null && a != null) {
             //Log.d(TAG, "onAddressExtraction: " + extractedAddress.getThoroughfare());
-            Log.d(TAG, "onAddressExtraction2: " + a.getAddressLine(0));
+           // Log.d(TAG, "onAddressExtraction2: " + a.getAddressLine(0));
             if (extractedAddress.getThoroughfare().equals(a.getThoroughfare())) {
                 //Log.d(TAG, "SUCCESS: PASSED");
                 //mark the current place location
@@ -154,8 +174,12 @@ public class Main2Activity extends AppCompatActivity {
                 editor.putLong("placeLng", Double.doubleToLongBits(curLng));
                 editor.apply();
                 //notify user
-                pushNotification();
-                placeFirstVisit = false;
+                if(mode ==1){
+                    pushNotification(1);
+                    placeFirstVisit = false;
+                }else if(mode ==2){
+                    pushNotification(2);
+                }
             }
         }
     }
@@ -172,8 +196,10 @@ public class Main2Activity extends AppCompatActivity {
         enableNotifications = settings.getBoolean("enableNotifications",false);
         enableVibration = settings.getBoolean("enableVibration",false);
         homeAddress = settings.getString("homeAddress","");
+
         distanceToNotify = (settings.getInt("distanceToNotify",0) +1)*10;
         addedPlaces = settings.getStringSet("addressesToNotify",new HashSet<String>());
+        enableTrainStations = settings.getBoolean("enableTrainStations",true);
         
         SharedPreferences sharedPref = getSharedPreferences("Stations", Context.MODE_PRIVATE);
         enableSearch = sharedPref.getBoolean("enableSearch",true);
@@ -203,7 +229,9 @@ public class Main2Activity extends AppCompatActivity {
             addedAddress = stringSetToAddresses(addedPlaces);
         }
 
-
+        Set<String> homeSet =  new HashSet<String>();
+        homeSet.add(homeAddress);
+        home = stringSetToAddresses(homeSet).get(0);
 
         //getAddresses();
         //pushNotification();
@@ -224,9 +252,15 @@ public class Main2Activity extends AppCompatActivity {
         enableNotifications = settings.getBoolean("enableNotifications",false);
         enableVibration = settings.getBoolean("enableVibration",false);
         homeAddress = settings.getString("homeAddress","");
+
+        Set<String> homeSet =  new HashSet<String>();
+        homeSet.add(homeAddress);
+        home = stringSetToAddresses(homeSet).get(0);
         distanceToNotify = (settings.getInt("distanceToNotify",0) +1)*10;
         addedPlaces = settings.getStringSet("addressesToNotify",new HashSet<String>());
-        Log.d(TAG, "update, add: " + addedPlaces);
+        enableTrainStations = settings.getBoolean("enableTrainStations",true);
+
+        Log.d(TAG, "update, add: " + addedPlaces + "; Distance to Notify:"+distanceToNotify);
         if(enableNotifications){
             Log.d(TAG, "enableNotifications");
         }
@@ -401,12 +435,18 @@ public class Main2Activity extends AppCompatActivity {
         }
     }
 
-    public void pushNotification(){
+    public void pushNotification(int mode){
+        String text = "";
+        if(mode ==1){
+           text = "Please put your mask on! You're now in the risk area.";
+        }else if(mode ==2){
+            text = "Did you bring a mask with you?";
+        }
         if(enableNotifications){
             Notification notification = new NotificationCompat.Builder(this, CHANNEL_1_ID)
                     .setSmallIcon(R.drawable.ic_one)
                     .setContentTitle("Covid19 Reminder")
-                    .setContentText("Please put your mask on! You're now in the risk area.")
+                    .setContentText(text)
                     .setCategory(NotificationCompat.CATEGORY_ALARM)
                     .build();
             Log.d(TAG, "NotificationBuild");
