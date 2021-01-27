@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.PersistableBundle;
+import android.text.method.LinkMovementMethod;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
@@ -75,6 +76,9 @@ public class TimerActivity2 extends AppCompatActivity {
 
         mEditTextInput = findViewById(R.id.added_time);
         mButtonSet = findViewById(R.id.button_set);
+
+        TextView t2 = (TextView) findViewById(R.id.adviceText);
+        t2.setMovementMethod(LinkMovementMethod.getInstance());
 
 
         mButtonStartPause.setOnClickListener(new View.OnClickListener() {
@@ -283,16 +287,16 @@ public class TimerActivity2 extends AppCompatActivity {
             timeLeft = preferences.getLong("timeLeft", 0);
             formatTime(timeLeft);
             mButtonStartPause.setImageResource(R.drawable.ic_baseline_play_circle_outline_24);
-        }else if(!mTimerRunning){
-            formatTime(timeInSeconds);
-            Log.d(TAG, "Test OK");
-            mButtonStartPause.setImageResource(R.drawable.ic_baseline_play_circle_outline_24);
-            mTimerPaused = false;
-        }else{
+        }else if(mTimerRunning){
             Log.d(TAG, "Test OK");
             formatTime(timeInSeconds);
             mButtonStartPause.setImageResource(R.drawable.ic_baseline_pause_circle_outline_24);
             mTimerRunning = true;
+            mTimerPaused = false;
+        }else{
+            formatTime(timeInSeconds);
+            Log.d(TAG, "Test OK");
+            mButtonStartPause.setImageResource(R.drawable.ic_baseline_play_circle_outline_24);
             mTimerPaused = false;
         }
         Gson gson = new Gson();

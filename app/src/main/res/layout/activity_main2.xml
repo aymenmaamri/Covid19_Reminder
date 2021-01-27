@@ -54,11 +54,12 @@
         android:layout_marginBottom="5dp"
         android:backgroundTint="#00FFFFFF"
         android:contentDescription="@string/help"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:onClick="help"
+        android:theme="@android:style/ThemeOverlay.Material.Dark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_help"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:theme="@android:style/ThemeOverlay.Material.Dark"/>
+        app:srcCompat="@android:drawable/ic_menu_help" />
 
     <Button
         android:id="@+id/maskSale"

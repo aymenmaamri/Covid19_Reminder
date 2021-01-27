@@ -93,19 +93,6 @@ public class Main2Activity extends AppCompatActivity {
     private boolean enableTrainStations;
 
 
-//    public void getAddresses(){
-//        try {
-//            List<Address> addresses = geocoder.getFromLocationName("bahnhof", 10);
-//            for(Address address : addresses) {
-//                Log.d(TAG, "List: " + address.toString());
-//            }
-//
-//        } catch (IOException e) {
-//            Log.d(TAG, "ListFailure: ");
-//            e.printStackTrace();
-//        }
-//    }
-
     LocationCallback locationCallback = new LocationCallback() {
         @Override
         public void onLocationResult(LocationResult locationResult) {
@@ -129,8 +116,6 @@ public class Main2Activity extends AppCompatActivity {
 
                         if(getDistance(curLat,curLng,home.getLatitude(),home.getLongitude())<distanceToNotify){
                             atHome = true;
-                            Log.d(TAG, "Get home");
-
                         }
                     }
                 } catch (IOException e) {
@@ -568,6 +553,11 @@ public class Main2Activity extends AppCompatActivity {
 
     public void btn2(View view) {
         Intent intent = new Intent(this, Main2Activity.class);
+        startActivity(intent);
+    }
+
+    public void help(View view){
+        Intent intent = new Intent(this, HelpActivity.class);
         startActivity(intent);
     }
 
